@@ -117,8 +117,7 @@ class Canvas2DAsContainer {
 
             }
         }
-
-
+        return this;
     }
 
     print(){
@@ -129,7 +128,8 @@ class Canvas2DAsContainer {
         this._particleCollection.forEach(elm => {
             this.overflowTreatment(elm);
             elm.draw(this.canvas);
-        })
+        });
+        return this;
     }
 
 

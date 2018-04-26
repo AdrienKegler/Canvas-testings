@@ -2,6 +2,7 @@ class Dot {
     constructor(x,y){
         this._x = x;
         this._y = y;
+        return this;
     }
 
 
@@ -11,6 +12,7 @@ class Dot {
 
     set x(value) {
         this._x = value;
+        return this;
     }
 
     get y() {
@@ -19,5 +21,6 @@ class Dot {
 
     set y(value) {
         this._y = value;
+        return this;
     }
 }

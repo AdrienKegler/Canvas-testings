@@ -20,6 +20,7 @@ class PhysX {
 
     set velocityX(value) {
         this._velocityX = value;
+        return this;
     }
 
     get velocityY() {
@@ -28,6 +29,7 @@ class PhysX {
 
     set velocityY(value) {
         this._velocityY = value;
+        return this;
     }
 
     get baseAccelerationX() {
@@ -36,6 +38,7 @@ class PhysX {
 
     set baseAccelerationX(value) {
         this._accelerationX = value;
+        return this;
     }
 
     get baseAccelerationY() {
@@ -44,6 +47,7 @@ class PhysX {
 
     set baseAccelerationY(value) {
         this._accelerationY = value;
+        return this;
     }
 
     get bounceAbsorption() {
@@ -52,6 +56,7 @@ class PhysX {
 
     set bounceAbsorption(value) {
         this._bounceAbsorption = value;
+        return this;
     }
 
     get behavior() {
@@ -60,6 +65,7 @@ class PhysX {
 
     set behavior(value) {
         this._behavior = value;
+        return this;
     }
 
 

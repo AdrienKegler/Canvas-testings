@@ -11,6 +11,7 @@ class InvervalTimer {
         this.timerId = window.setInterval(this.callback, interval);
 
         this.state = 1;
+        return this;
     }
 
 
@@ -21,6 +22,7 @@ class InvervalTimer {
         this.remaining = this.interval - (new Date() - this.startTime);
         window.clearInterval(this.timerId);
         this.state = 2;
+        return this;
     };
 
     resume() {
@@ -28,6 +30,7 @@ class InvervalTimer {
 
         this.state = 3;
         window.setTimeout(this.timeoutCallback(), this.remaining);
+        return this;
     };
 
     timeoutCallback() {
@@ -38,5 +41,6 @@ class InvervalTimer {
         this.startTime = new Date();
         this.timerId = window.setInterval(this.callback, this.interval);
         this.state = 1;
+        return this;
     };
 }

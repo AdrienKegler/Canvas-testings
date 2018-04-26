@@ -4,6 +4,7 @@ class PolygonDefinedByApexesParticle extends Particle{
         super(positionX, positionY, physX, color);
         this._apexCollection = args.length === 1 ? args[0] : args;
         this.centerShape();
+        return this;
     }
 
 
@@ -13,10 +14,12 @@ class PolygonDefinedByApexesParticle extends Particle{
 
     set apexCollection(value) {
         this._apexCollection = value;
+        return this;
     }
 
     addApex(apex){
         this._apexCollection.push(apex);
+        return this;
     }
 
     centerShape(){
@@ -33,10 +36,11 @@ class PolygonDefinedByApexesParticle extends Particle{
             apex.x = apex.x - sizeX/2;
             apex.y = apex.y - sizeY/2;
         })
+        return this;
     }
 
     setToPremadeShape(){
-
+        return this;
     }
 
 
@@ -59,5 +63,6 @@ class PolygonDefinedByApexesParticle extends Particle{
         });
         ctx.fillStyle = this.color;
         ctx.fill();
+        return this;
     }
 }

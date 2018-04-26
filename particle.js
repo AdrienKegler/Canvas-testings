@@ -15,6 +15,7 @@ class Particle {
 
     set positionX(value) {
         this._positionX = value;
+        return this;
     }
 
     get positionY() {
@@ -23,6 +24,7 @@ class Particle {
 
     set positionY(value) {
         this._positionY = value;
+        return this;
     }
 
     get color() {
@@ -31,6 +33,7 @@ class Particle {
 
     set color(value) {
         this._color = value;
+        return this;
     }
 
 
@@ -40,6 +43,7 @@ class Particle {
 
     set physX(value) {
         this._physX = value;
+        return this;
     }
 
 
@@ -49,6 +53,7 @@ class Particle {
             this.positionY = this.positionY + this.physX.velocityY;
             this.physX.update();
         }
+        return this;
     }
 
 

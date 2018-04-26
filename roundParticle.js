@@ -3,6 +3,7 @@ class RoundParticle extends Particle{
     constructor(positionX, positionY,  physX = new PhysX(), color, radius) {
         super(positionX, positionY, physX, color);
         this.radius = radius;
+        return this;
     }
 
     get radius() {
@@ -11,6 +12,7 @@ class RoundParticle extends Particle{
 
     set radius(value) {
         this._radius = value;
+        return this;
     }
 
 
@@ -20,6 +22,7 @@ class RoundParticle extends Particle{
         ctx.arc(this.positionX, this.positionY, this.radius, 0, 2 * Math.PI, true);
         ctx.fillStyle = this.color;
         ctx.fill();
+        return this;
     }
 
 }
