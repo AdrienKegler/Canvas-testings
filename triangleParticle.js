@@ -1,7 +1,7 @@
-class TriangleParticle extends PolygonDefinedByApexesParticle{
+class TriangleParticle extends PolygonDefinedByApexesParticle {
 
-    constructor(positionX, positionY, physX = new PhysX(), color, apex1, apex2, apex3) {
-        super(positionX, positionY, physX, color, apex1, apex2, apex3);
+    constructor(positionX, positionY, physX = new PhysX(), visualFx, apex1, apex2, apex3) {
+        super(positionX, positionY, physX, visualFx, apex1, apex2, apex3);
         return this;
     }
 
@@ -30,12 +30,6 @@ class TriangleParticle extends PolygonDefinedByApexesParticle{
 
     set apex3(value) {
         this.this.apexCollection[2] = value;
-        return this;
-    }
-
-    draw(ctx){
-        super.applyPhysics();
-        super.draw(ctx);
         return this;
     }
 }

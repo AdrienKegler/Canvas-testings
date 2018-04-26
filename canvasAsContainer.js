@@ -1,7 +1,8 @@
 class Canvas2DAsContainer {
 
-    constructor(canvas, keepTrace = false){
+    constructor(canvas, keepTrace = false) {
         this._overflowStrategy = "delete";
+        this._unvisibleStrategy = "delete";
         this._canvas = canvas.getContext('2d');
         this._particleCollection = [];
         this._keepTrace = keepTrace;
@@ -36,7 +37,7 @@ class Canvas2DAsContainer {
         return this;
     }
 
-    removeParticle(particle){
+    removeParticle(particle) {
         let index = this._particleCollection.indexOf(particle);
 
         if (index > -1) {
@@ -54,9 +55,15 @@ class Canvas2DAsContainer {
         return this;
     }
 
+    get unvisibleStrategy() {
+        return this._unvisibleStrategy;
+    }
 
+    set unvisibleStrategy(value) {
+        this._unvisibleStrategy = value;
+    }
 
-    // check if Dot is inside a polygone (defined by apex and from any type)
+// check if Dot is inside a polygon (defined by apex and from any type)
     is_inside(dot, vs) {
 
         var x = dot.x, y = dot.y;
@@ -75,39 +82,46 @@ class Canvas2DAsContainer {
     };
 
 
-    overflowTreatment(elm){
-
-        if(this.overflowStrategy !== 'nothing')
-        {
-            switch (this.overflowStrategy)
-            {
+    overflowTreatment(elm) {
+        if (this.overflowStrategy !== 'nothing') {
+            switch (this.overflowStrategy) {
                 case 'delete':
-                    if(elm.positionX > this.canvas.canvas.width || elm.positionY > this.canvas.canvas.height
+                    if (elm.positionX > this.canvas.canvas.width || elm.positionY > this.canvas.canvas.height
                         ||
-                        elm.positionX < 0 || elm.positionY < 0)
-                    {
+                        elm.positionX < 0 || elm.positionY < 0) {
                         this.removeParticle(elm);
                     }
                     break;
 
                 case 'loop':
-                    if(elm.positionX > this.canvas.canvas.width || elm.positionY > this.canvas.canvas.height){
+                    if (elm.positionX > this.canvas.canvas.width || elm.positionY > this.canvas.canvas.height) {
                         elm.positionX = elm.positionX % this.canvas.canvas.width;
                         elm.positionY = elm.positionY % this.canvas.canvas.height;
                     }
-                    if(elm.positionX < 0){
+                    if (elm.positionX < 0) {
                         elm.positionX = this.canvas.canvas.width + elm.positionX;
                     }
-                    if(elm.positionY < 0){
+                    if (elm.positionY < 0) {
                         elm.positionY = this.canvas.canvas.height + elm.positionY;
                     }
                     break;
 
                 case 'bounce':
-                    if((elm.positionX > this.canvas.canvas.width || elm.positionX < 0) && elm.physX.velocityX !== 0){
+                    if (elm.positionX < 0) {
+                        elm.positionX = 0;
+                        elm.physX.bounceX();
+                    } else if (elm.positionX > this.canvas.canvas.width) {
+                        elm.positionX = this.canvas.canvas.width;
                         elm.physX.bounceX();
                     }
-                    if((elm.positionY > this.canvas.canvas.height || elm.positionY < 0) && elm.physX.velocityY !== 0){
+
+
+                    if (elm.positionY < 0) {
+                        elm.positionY = 0;
+                        elm.physX.bounceY();
+                    }
+                    else if (elm.positionY > this.canvas.canvas.height) {
+                        elm.positionY = this.canvas.canvas.height;
                         elm.physX.bounceY();
                     }
                     break;
@@ -120,18 +134,26 @@ class Canvas2DAsContainer {
         return this;
     }
 
-    print(){
-        if (!this._keepTrace)
-        {
+    print() {
+        if (!this._keepTrace) {
             this.canvas.clearRect(0, 0, canvas.width, canvas.height)
         }
         this._particleCollection.forEach(elm => {
+            if(!elm.isVisible()){
+                switch(this.unvisibleStrategy){
+                    case "delete":
+
+                        break;
+
+                    default:
+                        break;
+                }
+            }
             this.overflowTreatment(elm);
             elm.draw(this.canvas);
         });
         return this;
     }
-
 
 
 }
