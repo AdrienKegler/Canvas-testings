@@ -1,11 +1,11 @@
 
 class Vector {
 
-    constructor(...args){
-        if(!args){
-            args = {"X" : 0, "Y" : 0}
+    constructor(vectorArray){
+        if(!vectorArray){
+            vectorArray = {"X" : 0, "Y" : 0}
         }
-        this._components = args;
+        this._components = vectorArray;
         this._scale = 1;
         return this;
     }
@@ -19,11 +19,11 @@ class Vector {
         return this;
     }
 
-    getBaseComponentById(value){
+    getBaseDimension(value){
         return this.components[value];
     }
 
-    setBaseComponentById(id, value){
+    setBaseDimension(id, value){
         this.components[id] = value;
         return this;
     }
@@ -36,14 +36,29 @@ class Vector {
         this._scale = value;
         return this;
     }
-
-    getComponentById(value){
-        return this.getBaseComponentById(value) * this._scale;
+    setScale(value) {
+        this._scale = value;
+        return this;
     }
 
 
+    getDimension(value){
+        return this.getBaseDimension(value) * this._scale;
+    }
 
-    getMagnitude(){
+
+    static toVector(value){
+        if(value.constructor.name === "Vector")
+        {
+            return value;
+
+        }
+        else {
+            return new Vector(value);
+        }
+    }
+
+    get2DMagnitude(){
         let a = this.X;
         let b = this.Y;
 
@@ -51,7 +66,7 @@ class Vector {
     }
 
     getNormalized(){
-        let mag = this.getMagnitude();
+        let mag = this.get2DMagnitude();
 
         return new Vector(x/mag, y/mag);
     }
@@ -59,7 +74,7 @@ class Vector {
 
     // BE CAREFUL ! WOULD ERASE YOUR ORIGINAL STATE WITHOUT CHANCE OF RECOVER (from the class itself at least)
     normalize(){
-        let mag = this.getMagnitude();
+        let mag = this.get2DMagnitude();
         this.componentX = this.componentX/mag;
         this.componentY = this.componentY/mag;
         return this;
@@ -67,22 +82,26 @@ class Vector {
 }
 
 
-class Vectors{
 
-    sum(...args){
+function vectorsSum(...args){
 
-        sumVector = [];
-
-        args[0].components.forEach(dimention => {
-            sumVector[dimention] = 0;
-            for (var i = 0; i < args[0].components.length; i++) {
-                sumVector[dimention] += args[i].getComponentById(dimention) === undefined ? 0 :args[i].getComponentById(dimention);
-            }
-        });
+    let sumVector = {};
+    for(dimension in args[0].components) {
+        sumVector[dimension] = 0;
+        for (var i = 0; i < args.length; i++) {
+            sumVector[dimension] = args[i].getDimension(dimension) === undefined ? sumVector[dimension] : sumVector[dimension] + args[i].getDimension(dimension);
+        }
     }
 
-    // If you want to involve more than 2
-    substract(){
+    return new Vector(sumVector);
+}
 
-    }
+// If you want to involve more than 2, use sum() before
+function vectorsSubstract(vector1, vector2){
+
+    let newVector = {};
+    vector1.components.forEach(dimension => {
+        newVector[dimension] = vector1[dimension] - (vector2[dimension] === undefined ? 0 : vector2[dimension]);
+    });
+    return new Vector.prototype.map(newVector);
 }

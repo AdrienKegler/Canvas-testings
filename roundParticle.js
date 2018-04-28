@@ -1,7 +1,7 @@
 class RoundParticle extends Particle {
 
-    constructor(positionX, positionY, physX = new PhysX(), visualFx, radius) {
-        super(positionX, positionY, physX, visualFx);
+    constructor(position, physX, visualFx, radius) {
+        super(position, physX, visualFx);
         this.radius = radius;
         return this;
     }
@@ -18,7 +18,7 @@ class RoundParticle extends Particle {
 
     drawSpecific(ctx) {
         ctx.beginPath();
-        ctx.arc(this.positionX, this.positionY, this.radius, 0, 2 * Math.PI, true);
+        ctx.arc(this.position.getDimension("X"), this.position.getDimension("Y"), this.radius, 0, 2 * Math.PI, true);
         return this;
     }
 

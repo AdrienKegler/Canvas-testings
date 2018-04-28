@@ -1,31 +1,23 @@
 class Particle {
 
 
-    constructor(positionX, positionY, physX = new PhysX(), visualFx) {
-        this._positionX = positionX;
-        this._positionY = positionY;
+    constructor(position, physX, visualFx) {
+
+        this._position = Vector.toVector(position);
         this._physX = physX;
         this._visualFx = visualFx;
     }
 
 
-    get positionX() {
-        return this._positionX;
+    get position() {
+        return this._position;
     }
 
-    set positionX(value) {
-        this._positionX = value;
+    set position(value) {
+        this._position = Vector.toVector(value);
         return this;
     }
 
-    get positionY() {
-        return this._positionY;
-    }
-
-    set positionY(value) {
-        this._positionY = value;
-        return this;
-    }
 
 
     get visualFx() {
@@ -34,6 +26,7 @@ class Particle {
 
     set visualFx(value) {
         this._visualFx = value;
+        return this;
     }
 
     get physX() {
@@ -47,16 +40,16 @@ class Particle {
 
 
     isVisible(){
-        return this.visualFx.colorA === 0;
+        return (this.visualFx.colorA === 0 || (this.visualFx.colorR === 0 && this.visualFx.colorG === 0 && this.visualFx.colorB === 0));
     }
 
 
     applyPhysics(tics = 1) {
         for (let i = 0; i < tics; i++) {
-            this.positionX = this.positionX + this.physX.velocityX;
-            this.positionY = this.positionY + this.physX.velocityY;
-            this.physX.update(this.positionX, this.positionY);
-            console.log(this.physX);
+
+            this.position =  vectorsSum(this.position, this.physX.velocity);
+
+            this.physX.update(this.position);
         }
         return this;
     }
@@ -66,6 +59,7 @@ class Particle {
     }
 
     draw(ctx) {
+
         this.applyPhysics();
         this.drawSpecific(ctx);
         ctx.fillStyle = this.visualFx.getColor();

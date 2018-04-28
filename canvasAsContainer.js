@@ -1,8 +1,8 @@
 class Canvas2DAsContainer {
 
     constructor(canvas, keepTrace = false) {
-        this._overflowStrategy = "delete";
-        this._unvisibleStrategy = "delete";
+        this._overflowStrategy = "bounce";
+        this._unvisibleStrategy = "bounce";
         this._canvas = canvas.getContext('2d');
         this._particleCollection = [];
         this._keepTrace = keepTrace;
@@ -26,7 +26,6 @@ class Canvas2DAsContainer {
         this._overflowStrategy = value;
         return this;
     }
-
 
     get particleCollection() {
         return this._particleCollection;
@@ -61,6 +60,7 @@ class Canvas2DAsContainer {
 
     set unvisibleStrategy(value) {
         this._unvisibleStrategy = value;
+        return this;
     }
 
 // check if Dot is inside a polygon (defined by apex and from any type)
@@ -70,8 +70,8 @@ class Canvas2DAsContainer {
 
         var inside = false;
         for (var i = 0, j = vs.length - 1; i < vs.length; j = i++) {
-            var xi = vs[i][0], yi = vs[i][1];
-            var xj = vs[j][0], yj = vs[j][1];
+            var xi = vs[i].X, yi = vs[i].Y;
+            var xj = vs[j].X, yj = vs[j].Y;
 
             var intersect = ((yi > y) != (yj > y))
                 && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
@@ -86,42 +86,42 @@ class Canvas2DAsContainer {
         if (this.overflowStrategy !== 'nothing') {
             switch (this.overflowStrategy) {
                 case 'delete':
-                    if (elm.positionX > this.canvas.canvas.width || elm.positionY > this.canvas.canvas.height
+                    if (elm.position.getDimension("X") > this.canvas.canvas.width || elm.position.getDimension("Y") > this.canvas.canvas.height
                         ||
-                        elm.positionX < 0 || elm.positionY < 0) {
+                        elm.position.getDimension("X") < 0 || elm.position.getDimension("Y") < 0) {
                         this.removeParticle(elm);
                     }
                     break;
 
-                case 'loop':
-                    if (elm.positionX > this.canvas.canvas.width || elm.positionY > this.canvas.canvas.height) {
-                        elm.positionX = elm.positionX % this.canvas.canvas.width;
-                        elm.positionY = elm.positionY % this.canvas.canvas.height;
+                case 'loop': // TODO : Check if it would work with speeds higher than width/height
+                    if (elm.position.getDimension("X") > this.canvas.canvas.width || elm.position.getDimension("Y") > this.canvas.canvas.height) {
+                        elm.position.setBaseDimension("X", elm.position.getDimension("X") % this.canvas.canvas.width);
+                        elm.position.setBaseDimension("Y", elm.position.getDimension("Y") % this.canvas.canvas.height);
                     }
-                    if (elm.positionX < 0) {
-                        elm.positionX = this.canvas.canvas.width + elm.positionX;
+                    if (elm.position.getDimension("X") < 0) {
+                        elm.position.setBaseDimension("X", this.canvas.canvas.width + elm.position.getDimension("X"));
                     }
-                    if (elm.positionY < 0) {
-                        elm.positionY = this.canvas.canvas.height + elm.positionY;
+                    if (elm.position.getDimension("Y") < 0) {
+                        elm.position.setBaseDimension("Y", this.canvas.canvas.height + elm.position.getDimension("Y"));
                     }
                     break;
 
                 case 'bounce':
-                    if (elm.positionX < 0) {
-                        elm.positionX = 0;
+                    if (elm.position.getDimension("X") < 0) {
+                        elm.position.setBaseDimension("X", 0);
                         elm.physX.bounceX();
-                    } else if (elm.positionX > this.canvas.canvas.width) {
-                        elm.positionX = this.canvas.canvas.width;
+                    } else if (elm.position.getDimension("X") > this.canvas.canvas.width) {
+                        elm.position.setBaseDimension("X", this.canvas.canvas.width);
                         elm.physX.bounceX();
                     }
 
 
-                    if (elm.positionY < 0) {
-                        elm.positionY = 0;
+                    if (elm.position.getDimension("Y") < 0) {
+                        elm.position.setBaseDimension("Y", 0);
                         elm.physX.bounceY();
                     }
-                    else if (elm.positionY > this.canvas.canvas.height) {
-                        elm.positionY = this.canvas.canvas.height;
+                    else if (elm.position.getDimension("Y") > this.canvas.canvas.height) {
+                        elm.position.setBaseDimension("Y", this.canvas.canvas.height);
                         elm.physX.bounceY();
                     }
                     break;
@@ -135,14 +135,14 @@ class Canvas2DAsContainer {
     }
 
     print() {
-        if (!this._keepTrace) {
+        if ( !this._keepTrace ) {
             this.canvas.clearRect(0, 0, canvas.width, canvas.height)
         }
-        this._particleCollection.forEach(elm => {
-            if(!elm.isVisible()){
+        this._particleCollection.forEach( elm => {
+            if( !elm.isVisible() ){
                 switch(this.unvisibleStrategy){
                     case "delete":
-
+                        this.removeParticle(elm);
                         break;
 
                     default:

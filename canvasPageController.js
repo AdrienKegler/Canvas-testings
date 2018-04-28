@@ -3,41 +3,37 @@ var mouseX = window.innerWidth/2, mouseY = window.innerHeight/2;
 
 function coreFunction(canvas) {
 
-    let frameRate = 120;
+    let frameRate = 60;
     let delay = 1000 / frameRate;
 
     sizingCanvas(canvas);
 
     let container = new Canvas2DAsContainer(canvas);
-    container.overflowStrategy = "bounce";
+    container.overflowStrategy = "delete";
 
 
-    var a = function () {
+    let a = function () {
         container.addParticle(
-            new PolygonDefinedByApexesParticle(
-                Math.round(Math.random() * 100 + 500),
-                Math.round(Math.random() * 100 + 250),
-                new PhysX(0, 0).setBounceAbsorption(1),
+            new RoundParticle(
+                new Vector({
+                    "X" : Math.random() * 30 + 750,
+                    "Y" : Math.random() * 30 + 350
+                }),
+                new PhysX(
+                            {"X" : Math.random()*10, "Y" : 0},
+                            {"X" : -0.02, "Y" : 0}
+                        ).setBounceAbsorption(1).setBehavior("randomWalker"),
                 new VisualFx(),
-                ApexShapeSamples.starDestroyer()
+                3
             ));
     };
 
 
-    var timer = new InvervalTimer(f => {
-        if (container.particleCollection.length < 1) {
+    let timer = new InvervalTimer(f => {
+        if (container.particleCollection.length < 100) {
             a();
         }
 
-
-        // container.addParticle(new RoundParticle(    Math.random()*100 + 500,
-        //                                             Math.random()*100+250,
-        //                                             new PhysX(  0, // Initial velocity X
-        //                                                         -1,// Initial velocity Y
-        //                                                         Math.random() / -100,    // Permanent Force X
-        //                                                         Math.random() / 100),   // Permanent Force Y
-        //                                             "white",
-        //                                             3));
         container.print();
     }, delay);
 
@@ -48,9 +44,11 @@ function coreFunction(canvas) {
             case " ":
                 if (timer.state === 1) {
                     timer.pause();
+                    console.log("PAUSE")
                 }
                 else {
                     timer.resume();
+                    onsole.log("RESUME");
                 }
                 break;
 

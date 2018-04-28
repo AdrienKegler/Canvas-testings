@@ -1,7 +1,7 @@
 class PolygonDefinedByApexesParticle extends Particle {
 
-    constructor(positionX, positionY, physX = new PhysX(), color, ...args) {
-        super(positionX, positionY, physX, color);
+    constructor(position, physX = new PhysX(), color, ...args) {
+        super(position, physX, color);
         this._apexCollection = args.length === 1 ? args[0] : args;
         this.centerShape();
         return this;
@@ -57,10 +57,10 @@ class PolygonDefinedByApexesParticle extends Particle {
         let i = 0;
         this.apexCollection.forEach(apex => {
             if (i === 0) {
-                ctx.moveTo(this.positionX + apex.x, this.positionY + apex.y);
+                ctx.moveTo(this.position.getDimension("X") + apex.x, this.position.getDimension("Y") + apex.y);
             }
             else {
-                ctx.lineTo(this.positionX + apex.x, this.positionY + apex.y);
+                ctx.lineTo(this.position.getDimension("X") + apex.x, this.position.getDimension("Y") + apex.y);
             }
             i++;
         });

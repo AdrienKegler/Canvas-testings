@@ -1,7 +1,7 @@
 class TriangleParticle extends PolygonDefinedByApexesParticle {
 
-    constructor(positionX, positionY, physX = new PhysX(), visualFx, apex1, apex2, apex3) {
-        super(positionX, positionY, physX, visualFx, apex1, apex2, apex3);
+    constructor(position, physX = new PhysX(), visualFx, apex1, apex2, apex3) {
+        super(position, physX, visualFx, apex1, apex2, apex3);
         return this;
     }
 

@@ -93,6 +93,30 @@ class VisualFx {
         return this;
     }
 
+
+    get fadingProbabilities() {
+        return this._fadingProbabilities;
+    }
+
+    set fadingProbabilities(value) {
+        this._fadingProbabilities = value;
+        return this;
+    }
+
+    setMeltingProbabilities(value) {
+        this._meltingProbabilities = value;
+        return this;
+    }
+
+    get meltingProbabilities() {
+        return this._meltingProbabilities;
+    }
+
+    set meltingProbabilities(value) {
+        this._meltingProbabilities = value;
+        return this;
+    }
+
     fade(rate = 1) {
         if(rate === 1 || rate > Math.random())
         {
@@ -100,6 +124,7 @@ class VisualFx {
         }
         return this;
     }
+
 
 
     melt(rates) {

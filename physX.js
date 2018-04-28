@@ -1,53 +1,34 @@
 class PhysX {
 
-    constructor(velocityX = 0, velocityY = 0, accelerationX = 0, accelerationY = 0, bounceAbsorption = 0.60) {
-        // TODO : think about velocity Object
-        this._velocityX = velocityX;
-        this._velocityY = velocityY;
-        this.maxVelocity = 2;
-        // TODO : think about acceleration Object
-        this._accelerationX = accelerationX;
-        this._accelerationY = accelerationY;
+    constructor(velocity, acceleration, bounceAbsorption = 0.60) {
 
-        this._behavior = 'mouseFollower'
+        // TODO : think about velocity Object
+        this._velocity = Vector.toVector(velocity);
+
+        // TODO : think about acceleration Object
+        this._acceleration = Vector.toVector(acceleration);
+
+        this._behavior = 'standard';
         this._bounceAbsorption = bounceAbsorption;
         return this;
     }
 
 
-    get velocityX() {
-        return this._velocityX;
+    get velocity() {
+        return this._velocity;
     }
 
-    set velocityX(value) {
-        this._velocityX = value;
+    set velocity(value) {
+        this._velocity = value;
         return this;
     }
 
-    get velocityY() {
-        return this._velocityY;
+    get acceleration() {
+        return this._acceleration;
     }
 
-    set velocityY(value) {
-        this._velocityY = value;
-        return this;
-    }
-
-    get baseAccelerationX() {
-        return this._accelerationX;
-    }
-
-    set baseAccelerationX(value) {
-        this._accelerationX = value;
-        return this;
-    }
-
-    get baseAccelerationY() {
-        return this._accelerationY;
-    }
-
-    set baseAccelerationY(value) {
-        this._accelerationY = value;
+    set acceleration(value) {
+        this._acceleration = value;
         return this;
     }
 
@@ -74,78 +55,88 @@ class PhysX {
         return this;
     }
 
-
-    getVelocityForRandomWalker(value) {
-        let num;
-
-        function getRandomInt(max) {
-            return Math.floor(Math.random() * Math.floor(max));
-        }
-
-        // num value
-        switch (getRandomInt(3)) {
-            case 0:
-                num = 0;
-                break;
-
-            case 1:
-                num = 1;
-                break;
-
-            case 2:
-                num = -1;
-                break;
-
-            default:
-                num = 1;
-                break;
-        }
-
-        // operation operator
-        switch (getRandomInt(2)) {
-            case 0:
-                return value * num;
-
-            case 1:
-                return value + num;
-
-            default:
-                return value * num;
-        }
-
+    setBehavior(value) {
+        this._behavior = value;
+        return this;
     }
 
+
+    getVelocityForRandomWalker(value) {
+        var newVelocity = {};
+
+        for (let dimension in value.components){
+            let num;
+
+            // num value
+            switch (KeglerMaths.getRandomInt(3)) {
+                case 0:
+                    num = 0;
+                    break;
+
+                case 1:
+                    num = 1;
+                    break;
+
+                case 2:
+                    num = -1;
+                    break;
+
+                default:
+                    num = 1;
+                    break;
+            }
+
+            // operation operator
+            switch (KeglerMaths.getRandomInt(2)) {
+                case 0:
+                    newVelocity[dimension] = value.components[dimension] * num;
+                    break;
+                case 1:
+                    newVelocity[dimension] = value.components[dimension] + num;
+                    break;
+                default:
+                    newVelocity[dimension] = value.components[dimension] * num;
+                    break;
+            }
+
+        }
+        return new Vector(newVelocity);
+    }
+
+
+
     bounceX() {
-        this.velocityX = this.velocityX * this.bounceAbsorption * -1;
+        this.velocity["X"] = this.velocity["X"] * this.bounceAbsorption * -1;
         return this;
     }
 
     bounceY() {
-        this.velocityY = this.velocityY * this.bounceAbsorption * -1;
+        this.velocity["Y"] = this.velocity["Y"] * this.bounceAbsorption * -1;
         return this;
     }
 
-    update(particlePositionX, particlePositionY) {
+
+    update(particlePosition) {
         switch (this._behavior) {
             case 'standard':
-                this.velocityX = this.velocityX + this.baseAccelerationX;
-                this.velocityY = this.velocityY + this.baseAccelerationY;
+                this.velocity = vectorsSum(this.velocity, this.acceleration);
                 break;
 
             case 'mouseFollower':
+                let distanceParticleMouseX = mouseX - particlePosition.getDimension("X");
+                let distanceParticleMouseY = mouseY - particlePosition.getDimension("Y");
 
-                console.log(mouseX);
-                this.baseAccelerationX = (this.baseAccelerationX + (mouseX-particlePositionX)/2/10000);
-                this.baseAccelerationY = (this.baseAccelerationY + (mouseY-particlePositionY)/2/10000);
+                this.acceleration = new Vector({
+                                                "X": distanceParticleMouseX * Math.abs(distanceParticleMouseX),
+                                                "Y": distanceParticleMouseY * Math.abs(distanceParticleMouseY)
+                                                }).setScale(0.0001);
 
-                this.velocityX = Math.max(Math.min(this.velocityX + this.baseAccelerationX, this.maxVelocity), this.maxVelocity * -1);
-                this.velocityY = Math.max(Math.min(this.velocityY + this.baseAccelerationY, this.maxVelocity), this.maxVelocity * -1);
+                this.velocity = vectorsSum(this.velocity, this.acceleration);
                 break;
 
 
-            case 'randomWalker':
-                this.velocityX = this.getVelocityForRandomWalker(this.velocityX);
-                this.velocityY = this.getVelocityForRandomWalker(this.velocityY);
+            case "randomWalker" :
+                this.velocity = this.getVelocityForRandomWalker(this.velocity);
                 break;
 
             default:
