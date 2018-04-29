@@ -1,11 +1,10 @@
-
 class Vector {
 
-    constructor(vectorArray){
-        if(!vectorArray){
-            vectorArray = {"X" : 0, "Y" : 0}
-        }
+    constructor(vectorArray  = {"X": 0, "Y": 0}) {
         this._components = vectorArray;
+        for(let index in this._components){
+            this._components[index] = Number.parseFloat(this._components[index]).toPrecision(6);
+        }
         this._scale = 1;
         return this;
     }
@@ -19,15 +18,6 @@ class Vector {
         return this;
     }
 
-    getBaseDimension(value){
-        return this.components[value];
-    }
-
-    setBaseDimension(id, value){
-        this.components[id] = value;
-        return this;
-    }
-
     get scale() {
         return this._scale;
     }
@@ -36,20 +26,28 @@ class Vector {
         this._scale = value;
         return this;
     }
-    setScale(value) {
-        this._scale = value;
-        return this;
+
+    angle(unit){
+        let deltaX = this.getDimension("X");
+        let deltaY = this.getDimension("Y");
+        let rad = Math.atan2(deltaY, deltaX); // In radians
+
+        switch (unit){
+            case "degree":
+            case "degrees":
+                return KeglerMaths.degrees(rad);
+
+            case "radian":
+            case "radians":
+                return rad;
+
+            default:
+                return rad;
+        }
     }
 
-
-    getDimension(value){
-        return this.getBaseDimension(value) * this._scale;
-    }
-
-
-    static toVector(value){
-        if(value.constructor.name === "Vector")
-        {
+    static toVector(value) {
+        if (value.constructor.name === "Vector") {
             return value;
 
         }
@@ -58,37 +56,77 @@ class Vector {
         }
     }
 
-    get2DMagnitude(){
-        let a = this.X;
-        let b = this.Y;
-
-        return(Math.sqrt((a * a) + (b * b)));
+    getBaseDimension(value) {
+        return this.components[value];
     }
 
-    getNormalized(){
+    setBaseDimension(id, value) {
+        this.components[id] = value;
+        return this;
+    }
+
+    setScale(value) {
+        this._scale = value;
+        return this;
+    }
+
+    getDimension(value) {
+        return this.getBaseDimension(value) * this._scale;
+    }
+
+    get2DMagnitude() {
+        let a = this.getDimension("X");
+        let b = this.getDimension("Y");
+
+        return (Math.sqrt((a * a) + (b * b)));
+    }
+
+
+    getNormalized() {
         let mag = this.get2DMagnitude();
-
-        return new Vector(x/mag, y/mag);
+        return new Vector({"X" : this.getDimension("X") / mag, "Y" : this.getDimension("Y") / mag});
     }
 
+    getSquared(){
+        let newVector = {};
+
+        for (dimension in this.components) {
+            newVector[dimension] = this.getDimension(dimension) * this.getDimension(dimension);
+        }
+
+        return new Vector(newVector);
+    }
+
+    getRootSquared(){
+        let newVector = {};
+
+        for (dimension in this.components) {
+            newVector[dimension] =  Math.sqrt(Math.abs(this.getDimension(dimension)));
+            newVector[dimension] = this.getDimension(dimension) < 0 ? newVector[dimension] * -1 : newVector[dimension]
+        }
+
+        return new Vector(newVector);
+    }
 
     // BE CAREFUL ! WOULD ERASE YOUR ORIGINAL STATE WITHOUT CHANCE OF RECOVER (from the class itself at least)
-    normalize(){
+    normalize() {
         let mag = this.get2DMagnitude();
-        this.componentX = this.componentX/mag;
-        this.componentY = this.componentY/mag;
+        this.componentX = this.componentX / mag;
+        this.componentY = this.componentY / mag;
         return this;
     }
 }
 
 
-
-function vectorsSum(...args){
+function vectorsSum(...args) {
+    if(args.length === 1 && (Array.isArray(args[0]) || typeof args[0] === "object")){
+        args = Object.values(args[0]);
+    }
 
     let sumVector = {};
-    for(dimension in args[0].components) {
+    for (dimension in args[0].components) { // dimensions of the returned vector are based on the first item given
         sumVector[dimension] = 0;
-        for (var i = 0; i < args.length; i++) {
+        for (let i = 0; i < args.length; i++) {
             sumVector[dimension] = args[i].getDimension(dimension) === undefined ? sumVector[dimension] : sumVector[dimension] + args[i].getDimension(dimension);
         }
     }
@@ -96,12 +134,22 @@ function vectorsSum(...args){
     return new Vector(sumVector);
 }
 
-// If you want to involve more than 2, use sum() before
-function vectorsSubstract(vector1, vector2){
+// If you want to involve more than 2, use vectorsSum() before
+function vectorsSubstract(vector1, vector2) {
 
     let newVector = {};
-    vector1.components.forEach(dimension => {
-        newVector[dimension] = vector1[dimension] - (vector2[dimension] === undefined ? 0 : vector2[dimension]);
-    });
-    return new Vector.prototype.map(newVector);
+    for (dimension in vector1.components) {
+        newVector[dimension] = vector1.getDimension(dimension) - (vector2.getDimension(dimension) === undefined ? 0 : vector2.getDimension(dimension));
+    }
+    return new Vector(newVector);
+}
+
+function vectorsMultiply(refVector, multiplicand){
+    let newVector = {};
+
+    for (dimension in refVector.components) {
+        newVector[dimension] = refVector.getDimension(dimension) * multiplicand;
+    }
+
+    return new Vector(newVector);
 }

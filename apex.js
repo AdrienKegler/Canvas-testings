@@ -1,6 +1,6 @@
-class Apex extends Dot{
+class Apex extends Vector{
     constructor(x,y){
-        super(x,y);
+        super({"X" : x, "Y" : y});
         return this;
     }
 }

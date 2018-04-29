@@ -1,11 +1,12 @@
 class Canvas2DAsContainer {
 
     constructor(canvas, keepTrace = false) {
+        this.worldCoordonates = new Vector({"X" : 0, "Y" : 0});
         this._overflowStrategy = "bounce";
-        this._unvisibleStrategy = "bounce";
+        this._unvisibleStrategy = "delete";
         this._canvas = canvas.getContext('2d');
-        this._particleCollection = [];
-        this._keepTrace = keepTrace;
+        this._particleCollection = new Collection();
+        this.visualFx = new VisualFx().setColor(0, 0, 0, 1);
         return this;
     }
 
@@ -24,34 +25,10 @@ class Canvas2DAsContainer {
 
     set overflowStrategy(value) {
         this._overflowStrategy = value;
-        return this;
     }
 
     get particleCollection() {
         return this._particleCollection;
-    }
-
-    addParticle(particle) {
-        this._particleCollection.push(particle);
-        return this;
-    }
-
-    removeParticle(particle) {
-        let index = this._particleCollection.indexOf(particle);
-
-        if (index > -1) {
-            this._particleCollection.splice(index, 1);
-        }
-        return this;
-    }
-
-    get keepTrace() {
-        return this._keepTrace;
-    }
-
-    set keepTrace(value) {
-        this._keepTrace = value;
-        return this;
     }
 
     get unvisibleStrategy() {
@@ -60,6 +37,21 @@ class Canvas2DAsContainer {
 
     set unvisibleStrategy(value) {
         this._unvisibleStrategy = value;
+        return this;
+    }
+
+    setOverflowStrategy(value) {
+        this._overflowStrategy = value;
+        return this;
+    }
+
+    addParticle(particle, particleName) {
+        this._particleCollection.add(particle, particleName);
+        return this;
+    }
+
+    removeParticle(particle) {
+        this._particleCollection.remove(particle);
         return this;
     }
 
@@ -81,6 +73,15 @@ class Canvas2DAsContainer {
         return inside;
     };
 
+    setRemanancy(value) {
+        this.visualFx.colorA = value;
+        return this;
+    }
+
+    keepTrace() {
+        this.setRemanancy(0);
+        return this;
+    }
 
     overflowTreatment(elm) {
         if (this.overflowStrategy !== 'nothing') {
@@ -93,7 +94,7 @@ class Canvas2DAsContainer {
                     }
                     break;
 
-                case 'loop': // TODO : Check if it would work with speeds higher than width/height
+                case 'loop': // TODO : Check if it would work with speeds greater than width/height
                     if (elm.position.getDimension("X") > this.canvas.canvas.width || elm.position.getDimension("Y") > this.canvas.canvas.height) {
                         elm.position.setBaseDimension("X", elm.position.getDimension("X") % this.canvas.canvas.width);
                         elm.position.setBaseDimension("Y", elm.position.getDimension("Y") % this.canvas.canvas.height);
@@ -106,23 +107,26 @@ class Canvas2DAsContainer {
                     }
                     break;
 
+                case 'share':
+                    // TODO : make share particles with other containers
+                    break;
+
+
+
                 case 'bounce':
-                    if (elm.position.getDimension("X") < 0) {
-                        elm.position.setBaseDimension("X", 0);
-                        elm.physX.bounceX();
-                    } else if (elm.position.getDimension("X") > this.canvas.canvas.width) {
-                        elm.position.setBaseDimension("X", this.canvas.canvas.width);
-                        elm.physX.bounceX();
+
+                    if (elm.position.getDimension("X") < 0 && elm.physX.velocity.getDimension("X") < 0) {
+                        elm.physX.bounce("X");
+                    } else if (elm.position.getDimension("X") > this.canvas.canvas.width && elm.physX.velocity.getDimension("X") > 0) {
+                        elm.physX.bounce("X");
                     }
 
 
-                    if (elm.position.getDimension("Y") < 0) {
-                        elm.position.setBaseDimension("Y", 0);
-                        elm.physX.bounceY();
+                    if (elm.position.getDimension("Y") < 0 && elm.physX.velocity.getDimension("Y") < 0) {
+                        elm.physX.bounce("Y");
                     }
-                    else if (elm.position.getDimension("Y") > this.canvas.canvas.height) {
-                        elm.position.setBaseDimension("Y", this.canvas.canvas.height);
-                        elm.physX.bounceY();
+                    else if (elm.position.getDimension("Y") > this.canvas.canvas.height && elm.physX.velocity.getDimension("Y") > 0) {
+                        elm.physX.bounce("Y");
                     }
                     break;
 
@@ -135,12 +139,17 @@ class Canvas2DAsContainer {
     }
 
     print() {
-        if ( !this._keepTrace ) {
-            this.canvas.clearRect(0, 0, canvas.width, canvas.height)
+        this.canvas.fillStyle = this.visualFx.getColor();
+        this.canvas.fillRect(0, 0, canvas.width, canvas.height);
+
+        if (instance._interParticleInteraction){
+
         }
-        this._particleCollection.forEach( elm => {
-            if( !elm.isVisible() ){
-                switch(this.unvisibleStrategy){
+
+        for (let elmIdx in this._particleCollection._content){
+            let elm = this._particleCollection._content[elmIdx];
+            if (!elm.isVisible()) {
+                switch (this.unvisibleStrategy) {
                     case "delete":
                         this.removeParticle(elm);
                         break;
@@ -149,9 +158,9 @@ class Canvas2DAsContainer {
                         break;
                 }
             }
-            this.overflowTreatment(elm);
             elm.draw(this.canvas);
-        });
+            this.overflowTreatment(elm);
+        }
         return this;
     }
 

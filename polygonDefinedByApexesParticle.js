@@ -24,16 +24,16 @@ class PolygonDefinedByApexesParticle extends Particle {
 
     centerShape() {
         let maxX = Math.max.apply(Math, this.apexCollection.map(function (o) {
-            return o.x;
+            return  o.getDimension("X");
         }));
         let minX = Math.min.apply(Math, this.apexCollection.map(function (o) {
-            return o.x;
+            return  o.getDimension("X");
         }));
         let maxY = Math.max.apply(Math, this.apexCollection.map(function (o) {
-            return o.y;
+            return  o.getDimension("Y");
         }));
         let minY = Math.min.apply(Math, this.apexCollection.map(function (o) {
-            return o.y;
+            return  o.getDimension("Y");
         }));
 
         let sizeX = maxX - minX;
@@ -41,9 +41,9 @@ class PolygonDefinedByApexesParticle extends Particle {
 
 
         this.apexCollection.forEach(apex => {
-            apex.x = apex.x - sizeX / 2;
-            apex.y = apex.y - sizeY / 2;
-        })
+            apex.setBaseDimension("X", apex.getDimension("X") - sizeX / 2);
+            apex.setBaseDimension("Y", apex.getDimension("Y") - sizeY / 2);
+        });
         return this;
     }
 
@@ -57,10 +57,10 @@ class PolygonDefinedByApexesParticle extends Particle {
         let i = 0;
         this.apexCollection.forEach(apex => {
             if (i === 0) {
-                ctx.moveTo(this.position.getDimension("X") + apex.x, this.position.getDimension("Y") + apex.y);
+                ctx.moveTo(apex.getDimension("X"), apex.getDimension("Y"));
             }
             else {
-                ctx.lineTo(this.position.getDimension("X") + apex.x, this.position.getDimension("Y") + apex.y);
+                ctx.lineTo(apex.getDimension("X"), apex.getDimension("Y"));
             }
             i++;
         });

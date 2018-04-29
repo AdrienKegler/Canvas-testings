@@ -4,21 +4,29 @@
     <meta charset="UTF-8">
     <title>Canvas</title>
     <link rel="stylesheet" href="canvasPage.css">
-    <script src="visualFX.js"></script>
-    <script src="canvasAsContainer.js"></script>
+
+    <script src="collection.js"></script>
+    <script src="intervalTimer.js"></script>
+
+    <script src="keglerMaths.js"></script>
+    <script src="probabilistChanges.js"></script>
+
+    <script src="vector.js"></script>
     <script src="physX.js"></script>
-    <script src="canvasPageController.js"></script>
+
     <script src="Dot.js"></script>
     <script src="apex.js"></script>
     <script src="particle.js"></script>
-    <script src="polygonDefinedByApexesParticle.js"></script>
     <script src="roundParticle.js"></script>
+    <script src="polygonDefinedByApexesParticle.js"></script>
     <script src="triangleParticle.js"></script>
-    <script src="intervalTimer.js"></script>
     <script src="shapesSamples.js"></script>
-    <script src="vector.js"></script>
-    <script src="probabilistChanges.js"></script>
-    <script src="keglerMaths.js"></script>
+
+    <script src="visualFX.js"></script>
+
+    <script src="canvas2DAsContainer.js"></script>
+    <script src="WorldSettings.js"></script>
+    <script src="canvasPageController.js"></script>
 </head>
 <body>
 <canvas id="mainCanvas">
@@ -28,7 +36,9 @@
 
 <script type="text/javascript">
     let canvas = document.getElementById('mainCanvas');
+    var instance = new WorldSettings();
     coreFunction(canvas);
+
 </script>
 
 </html>

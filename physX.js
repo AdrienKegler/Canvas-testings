@@ -1,15 +1,19 @@
 class PhysX {
 
-    constructor(velocity, acceleration, bounceAbsorption = 0.60) {
+    constructor(velocity, forcesCollection, bounceAbsorption = 0.60) {
 
-        // TODO : think about velocity Object
         this._velocity = Vector.toVector(velocity);
+        this._forcesCollection = new Collection(Object.values(forcesCollection));
+        this._frictionsCollection = new Collection();
+        this.addFriction(0.007  , "Air");
+        this._mass = 1;
+        this.updateAcceleration();
 
-        // TODO : think about acceleration Object
-        this._acceleration = Vector.toVector(acceleration);
 
         this._behavior = 'standard';
         this._bounceAbsorption = bounceAbsorption;
+        this._normalBounceAbsorption = bounceAbsorption/500;
+        this._interParticuleGravitation = true;
         return this;
     }
 
@@ -20,6 +24,33 @@ class PhysX {
 
     set velocity(value) {
         this._velocity = value;
+        return this;
+    }
+
+    get mass() {
+        return this._mass;
+    }
+
+    set mass(value) {
+        this._mass = value;
+        return this;
+    }
+
+    get forcesCollection() {
+        return this._forcesCollection;
+    }
+
+    set forcesCollection(value) {
+        this._forcesCollection = value;
+        return this;
+    }
+
+    get frictionCollection() {
+        return this._frictionsCollection;
+    }
+
+    set frictionCollection(value) {
+        this._frictionsCollection = value;
         return this;
     }
 
@@ -41,9 +72,12 @@ class PhysX {
         return this;
     }
 
-    setBounceAbsorption(value) {
-        this._bounceAbsorption = value;
-        return this;
+    get normalBounceAbsorption() {
+        return this._normalBounceAbsorption;
+    }
+
+    set normalBounceAbsorption(value) {
+        this._normalBounceAbsorption = value;
     }
 
     get behavior() {
@@ -52,6 +86,58 @@ class PhysX {
 
     set behavior(value) {
         this._behavior = value;
+        return this;
+    }
+
+
+
+    addForce(force, forceName) {
+        this._forcesCollection.add(force, forceName);
+        this.updateAcceleration();
+        return this;
+    }
+
+    removeForce(force) {
+        this._forcesCollection.remove(force);
+        this.updateAcceleration();
+        return this;
+    }
+
+    updateFrictionVector() {
+        let frictionSum = 0;
+        for (var coef in this._frictionsCollection._content){
+            frictionSum = frictionSum + this._frictionsCollection._content[coef];
+        }
+        this._forcesCollection.update("frictions", vectorsMultiply(this.velocity, frictionSum * -1));
+        return this;
+    }
+
+    addFriction(friction, frictionName = null) {
+        this._frictionsCollection.add(friction, frictionName);
+        this.updateFrictionVector().updateAcceleration();
+        return this;
+    }
+
+    removeFriction(friction) {
+        this._frictionsCollection.remove(friction)
+        this.updateFrictionVector().updateAcceleration();
+        return this;
+    }
+
+    setMass(value) {
+        this._mass = value;
+        return this;
+    }
+
+    updateAcceleration() {
+        this.updateFrictionVector();
+        this.acceleration = vectorsSum(this.forcesCollection._content);
+        this.acceleration.scale = this.acceleration.scale / this.mass;
+        return this;
+    }
+
+    setBounceAbsorption(value) {
+        this._bounceAbsorption = value;
         return this;
     }
 
@@ -64,7 +150,7 @@ class PhysX {
     getVelocityForRandomWalker(value) {
         var newVelocity = {};
 
-        for (let dimension in value.components){
+        for (let dimension in value.components) {
             let num;
 
             // num value
@@ -104,33 +190,31 @@ class PhysX {
     }
 
 
-
-    bounceX() {
-        this.velocity["X"] = this.velocity["X"] * this.bounceAbsorption * -1;
+    bounce(dimension) {
+        this._velocity.setBaseDimension(dimension, this._velocity.components[dimension] * this.bounceAbsorption * -1);
+        for (let otherDimensions in this._velocity.components){
+            if (otherDimensions !== dimension){
+                this._velocity.setBaseDimension(otherDimensions, this._velocity.components[otherDimensions] * (1-this.normalBounceAbsorption));
+            }
+        }
         return this;
     }
 
-    bounceY() {
-        this.velocity["Y"] = this.velocity["Y"] * this.bounceAbsorption * -1;
-        return this;
-    }
 
+    update(...args) {
 
-    update(particlePosition) {
+        if(this._interParticuleGravitation){
+
+        }
+
         switch (this._behavior) {
             case 'standard':
+                this.updateAcceleration();
                 this.velocity = vectorsSum(this.velocity, this.acceleration);
                 break;
 
             case 'mouseFollower':
-                let distanceParticleMouseX = mouseX - particlePosition.getDimension("X");
-                let distanceParticleMouseY = mouseY - particlePosition.getDimension("Y");
-
-                this.acceleration = new Vector({
-                                                "X": distanceParticleMouseX * Math.abs(distanceParticleMouseX),
-                                                "Y": distanceParticleMouseY * Math.abs(distanceParticleMouseY)
-                                                }).setScale(0.0001);
-
+                this.acceleration = vectorsSubstract(instance.mouseLocation, args[0]).getRootSquared().setScale(0.01);
                 this.velocity = vectorsSum(this.velocity, this.acceleration);
                 break;
 
@@ -140,8 +224,7 @@ class PhysX {
                 break;
 
             default:
-                this.velocityX = this.velocityX + this.baseAccelerationX;
-                this.velocityY = this.velocityY + this.baseAccelerationY;
+                this.velocity = vectorsSum(this.velocity, this.acceleration);
                 break;
         }
         return this;
