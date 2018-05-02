@@ -47,10 +47,6 @@ class PolygonDefinedByApexesParticle extends Particle {
         return this;
     }
 
-    setToPremadeShape() {
-        return this;
-    }
-
 
     drawSpecific(ctx) {
         ctx.beginPath();

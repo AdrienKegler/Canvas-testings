@@ -6,8 +6,10 @@ class Particle {
         this._position = Vector.toVector(position);
         this._physX = physX;
         this._visualFx = visualFx;
-        this._rotAngle = 0;
-        this._directionPointer = "N";
+        this._angle = 0; // degrees
+        this._angularVelocity = 0; // degrees
+        this._angularAcceleration = 0; // degrees
+        this._directionPointer = "Else";
     }
 
 
@@ -40,18 +42,20 @@ class Particle {
     }
 
 
-    get rotAngle() {
-        return this._rotAngle;
+    get angle() {
+        return this._angle;
     }
 
-    set rotAngle(value) {
-        this._rotAngle = value;
+    set angle(value) {
+        this._angle = value;
         return this;
     }
-    setRotAngle(value){
-        this._rotAngle = value;
+    setAngle(value){
+        this._angle = value;
         return this;
     }
+
+
 
     get directionPointer() {
         return this._directionPointer;
@@ -62,35 +66,39 @@ class Particle {
         return this;
     }
 
-    setPointerDirection(){
+    setDirectionPointer(value) {
+        this._directionPointer = value;
+        return this;
+    }
+
+    updateRotAngle(){
         switch (this._directionPointer){
             case "North":
             case "N":
-                this._rotAngle = 0;
+                this._angle = 0;
                 break;
             case "South":
             case "S":
-                this._rotAngle = 180;
+                this._angle = 180;
                 break;
             case "West":
             case "W":
-                this._rotAngle = 270;
+                this._angle = 270;
                 break;
             case "East":
             case "E":
-                this._rotAngle = 90;
+                this._angle = 90;
                 break;
 
             case "Velocity":
-                this._rotAngle = this.physX.velocity.angle("degrees") + 90;
+                this._angle = this.physX.velocity.angle("degrees") + 90;
                 break;
 
             case "Acceleration":
-                this._rotAngle = this.physX.acceleration.angle("degrees") + 90;
+                this._angle = this.physX.acceleration.angle("degrees") + 90;
                 break;
 
             default:
-                this._rotAngle = 0;
                 break;
         }
     }
@@ -99,12 +107,13 @@ class Particle {
         return !(this.visualFx.colorA === 0 || (this.visualFx.colorR === 0 && this.visualFx.colorG === 0 && this.visualFx.colorB === 0));
     }
 
+    updateGravityAttractionBetweenParticles(particles){
+        this.physX.gravityAttractionToParticles(this, particles);
+    }
 
     applyPhysics(tics = 1) {
         for (let i = 0; i < tics; i++) {
-
             this.position = vectorsSum(this.position, this.physX.velocity);
-
             this.physX.update(this.position);
         }
         return this;
@@ -118,8 +127,9 @@ class Particle {
     }
 
     draw(ctx) {
+
         this.applyPhysics();
-        this.setPointerDirection();
+        this.updateRotAngle();
 
 
 
@@ -127,7 +137,7 @@ class Particle {
 
         ctx.translate(this._position.getDimension("X"), this._position.getDimension("Y"));
 
-        ctx.rotate(this._rotAngle * Math.PI / 180);
+        ctx.rotate(this._angle * Math.PI / 180);
 
         ctx.fillStyle = this.visualFx.getColor();
 

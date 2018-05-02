@@ -142,12 +142,15 @@ class Canvas2DAsContainer {
         this.canvas.fillStyle = this.visualFx.getColor();
         this.canvas.fillRect(0, 0, canvas.width, canvas.height);
 
-        if (instance._interParticleInteraction){
-
-        }
 
         for (let elmIdx in this._particleCollection._content){
             let elm = this._particleCollection._content[elmIdx];
+
+            if (instance._interParticleInteraction){
+                let particleCollectionCopy = this.particleCollection;
+                elm.updateGravityAttractionBetweenParticles(particleCollectionCopy);
+            }
+
             if (!elm.isVisible()) {
                 switch (this.unvisibleStrategy) {
                     case "delete":

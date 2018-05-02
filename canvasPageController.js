@@ -4,32 +4,36 @@ function coreFunction(canvas) {
 
     let container = new Canvas2DAsContainer(canvas);
     instance._containerCollection.add(container, "Container");
-    container.setOverflowStrategy("delete").setRemanancy(0.3);
+    container.setOverflowStrategy("loop").setRemanancy(1);
 
 
 
 
-    var a = function (size) {
+    var a = function (size, pointX = null, pointY = null) {
         let point = KeglerMaths.randPointInCircle(50);
 
         container.addParticle(
-            new RoundParticle(
+            new TriangleParticle(
                 new Vector({
-                    "X": point.X + window.innerWidth/2,
-                    "Y": point.Y + window.innerHeight/2
+                    "X": Math.random() * window.innerWidth,
+                    "Y": Math.random() * window.innerHeight
                 }),
                 new PhysX(
                     {"X": 0, "Y": 0},
                     {}).addForce(new Vector({"X": 0, "Y": 0.00 * size * instance._gravityConstant}), "gravity")
-                    .setBounceAbsorption(0.65).setBehavior("mouseFollower").setMass(size),
+                    .setBounceAbsorption(0.65).setBehavior("standard").setMass(size * size),
                 new VisualFx().setColor(Math.random() * 255, Math.random() * 255, Math.random() * 255, 1),
-                8
-            ));
+                new Apex(5,0),
+                new Apex(0,15),
+                new Apex(10,15),
+
+            ).setDirectionPointer("Acceleration")
+        );
     };
 
 
     let timer = new InvervalTimer(f => {
-        if (container.particleCollection._content.length < 100) {
+        if (container.particleCollection._content.length < 40) {
             a(3);
         }
 
@@ -50,6 +54,11 @@ function coreFunction(canvas) {
                     console.log("RESUME");
                 }
                 break;
+
+            case "s":
+                a(3);
+                break;
+
             case "w":
                 container.particleCollection.forEach(particle => {
                     particle._physX.addForce(

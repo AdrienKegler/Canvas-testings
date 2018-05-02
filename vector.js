@@ -84,7 +84,11 @@ class Vector {
 
     getNormalized() {
         let mag = this.get2DMagnitude();
-        return new Vector({"X" : this.getDimension("X") / mag, "Y" : this.getDimension("Y") / mag});
+        let dimensionX = mag === 0 ? 0 : this.getDimension("X") / mag;
+        let dimensionY = mag === 0 ? 0 : this.getDimension("Y") / mag;
+
+
+        return new Vector({"X" : dimensionX, "Y" : dimensionY });
     }
 
     getSquared(){

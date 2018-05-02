@@ -5,15 +5,18 @@ class PhysX {
         this._velocity = Vector.toVector(velocity);
         this._forcesCollection = new Collection(Object.values(forcesCollection));
         this._frictionsCollection = new Collection();
-        this.addFriction(0.007  , "Air");
         this._mass = 1;
-        this.updateAcceleration();
-
 
         this._behavior = 'standard';
+        this._gravityFormulaName = "gaussian";
+        this._attractedbyOtherParticles = true;
         this._bounceAbsorption = bounceAbsorption;
-        this._normalBounceAbsorption = bounceAbsorption/500;
+        this._normalBounceAbsorption = bounceAbsorption / 500;
         this._interParticuleGravitation = true;
+
+        this._gotVisionAngle = true;
+
+        this.addFriction(0.007, "Air");
         return this;
     }
 
@@ -89,7 +92,51 @@ class PhysX {
         return this;
     }
 
+    get frictionsCollection() {
+        return this._frictionsCollection;
+    }
 
+    set frictionsCollection(value) {
+        this._frictionsCollection = value;
+    }
+
+    get interParticuleGravitation() {
+        return this._interParticuleGravitation;
+    }
+
+    set interParticuleGravitation(value) {
+        this._interParticuleGravitation = value;
+    }
+
+
+    get gravityFormulaName() {
+        return this._gravityFormulaName;
+    }
+
+    set gravityFormulaName(value) {
+        this._gravityFormulaName = value;
+    }
+
+    get attractedbyOtherParticles() {
+        return this._attractedbyOtherParticles;
+    }
+
+    set attractedbyOtherParticles(value) {
+        this._attractedbyOtherParticles = value;
+    }
+
+    get gotVisionAngle() {
+        return this._gotVisionAngle;
+    }
+
+    set gotVisionAngle(value) {
+        this._gotVisionAngle = value;
+    }
+
+    setMass(value) {
+        this._mass = value;
+        return this;
+    }
 
     addForce(force, forceName) {
         this._forcesCollection.add(force, forceName);
@@ -105,7 +152,7 @@ class PhysX {
 
     updateFrictionVector() {
         let frictionSum = 0;
-        for (var coef in this._frictionsCollection._content){
+        for (var coef in this._frictionsCollection._content) {
             frictionSum = frictionSum + this._frictionsCollection._content[coef];
         }
         this._forcesCollection.update("frictions", vectorsMultiply(this.velocity, frictionSum * -1));
@@ -124,15 +171,11 @@ class PhysX {
         return this;
     }
 
-    setMass(value) {
-        this._mass = value;
-        return this;
-    }
-
     updateAcceleration() {
         this.updateFrictionVector();
         this.acceleration = vectorsSum(this.forcesCollection._content);
-        this.acceleration.scale = this.acceleration.scale / this.mass;
+
+        this.acceleration.setScale(this.acceleration.scale / this.mass);
         return this;
     }
 
@@ -145,7 +188,6 @@ class PhysX {
         this._behavior = value;
         return this;
     }
-
 
     getVelocityForRandomWalker(value) {
         var newVelocity = {};
@@ -189,44 +231,83 @@ class PhysX {
         return new Vector(newVelocity);
     }
 
-
     bounce(dimension) {
         this._velocity.setBaseDimension(dimension, this._velocity.components[dimension] * this.bounceAbsorption * -1);
-        for (let otherDimensions in this._velocity.components){
-            if (otherDimensions !== dimension){
-                this._velocity.setBaseDimension(otherDimensions, this._velocity.components[otherDimensions] * (1-this.normalBounceAbsorption));
+        for (let otherDimensions in this._velocity.components) {
+            if (otherDimensions !== dimension) {
+                this._velocity.setBaseDimension(otherDimensions, this._velocity.components[otherDimensions] * (1 - this.normalBounceAbsorption));
             }
         }
+        return this;
+    }
+
+    gravityAttractionToParticles(fatherParticle, particles) {
+        if (this._attractedbyOtherParticles) {
+            let particleAttractionForce = new Vector();
+
+            for (let particleIdx in particles._content) {
+                let positionDiff = vectorsSubstract(particles._content[particleIdx].position, fatherParticle.position);
+                let positionDiffMag = positionDiff.get2DMagnitude();
+                let positionDiffNormalized = positionDiff.getNormalized();
+                let potentialNewMagnitude = instance.gravityConstant * fatherParticle.physX._mass * particles._content[particleIdx].physX._mass;
+                switch (this._gravityFormulaName) {
+                    case 'Real':
+                    case 'real':
+                        potentialNewMagnitude = KeglerMaths.limit(potentialNewMagnitude / (positionDiffMag * positionDiffMag), 0.1);
+                        break;
+
+                    case "attractAndFakeBounce":
+                        potentialNewMagnitude = KeglerMaths.limit(potentialNewMagnitude / Math.pow((positionDiffMag - 20), 2), 0.5, -0.5);
+                        break;
+
+                    case "gaussian":
+                        potentialNewMagnitude = KeglerMaths.limit((potentialNewMagnitude / (5 * Math.sqrt(2 * Math.PI))) * Math.exp(-1 / 2 * Math.pow((positionDiffMag - 200) / Math.sqrt(1000), 2)) -0.001, 0.1, -0.01);
+                        break;
+
+                    default:
+                        potentialNewMagnitude = KeglerMaths.limit(potentialNewMagnitude / (positionDiffMag * positionDiffMag), 0.1);
+                        break;
+                }
+                let newMagnitude = potentialNewMagnitude === Infinity ? 0 : potentialNewMagnitude;
+                let individualAttractionForce = vectorsMultiply(positionDiffNormalized, newMagnitude);
+                particleAttractionForce = vectorsSum(individualAttractionForce, particleAttractionForce); // this order is important, particleAttractionForce will take the range of dimensions of the particles.
+            }
+
+
+            this.forcesCollection.update("particleAttractionForce", particleAttractionForce);
+        }
+
         return this;
     }
 
 
     update(...args) {
 
-        if(this._interParticuleGravitation){
-
-        }
-
         switch (this._behavior) {
+
+            case "randomWalker" :
+                this.velocity = this.getVelocityForRandomWalker(this.velocity);
+                return this;
+
+
             case 'standard':
                 this.updateAcceleration();
                 this.velocity = vectorsSum(this.velocity, this.acceleration);
                 break;
 
             case 'mouseFollower':
-                this.acceleration = vectorsSubstract(instance.mouseLocation, args[0]).getRootSquared().setScale(0.01);
-                this.velocity = vectorsSum(this.velocity, this.acceleration);
+                let mouseAttraction = vectorsSubstract(instance.mouseLocation, args[0]).getRootSquared().setScale(0.01);
+                this.forcesCollection.update("mouseAttraction", mouseAttraction);
+                this.updateAcceleration();
                 break;
 
-
-            case "randomWalker" :
-                this.velocity = this.getVelocityForRandomWalker(this.velocity);
-                break;
 
             default:
-                this.velocity = vectorsSum(this.velocity, this.acceleration);
                 break;
         }
+
+
+        this.velocity = vectorsSum(this.velocity, this.acceleration);
         return this;
     }
 }

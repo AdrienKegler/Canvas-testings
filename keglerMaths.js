@@ -16,6 +16,15 @@ class KeglerMaths {
     }
 
 
+
+
+
+
+
+
+
+    // TRIGONOMETRY
+
     static randPointInCircle(radius = 1) {
         let pt_angle = Math.random() * 2 * Math.PI;
         let pt_radius_sq = Math.random() * radius * radius;
@@ -23,6 +32,15 @@ class KeglerMaths {
         let pt_y = Math.sqrt(pt_radius_sq) * Math.sin(pt_angle);
 
         return {"X": pt_x, "Y": pt_y}
+    }
+
+    static polarToCarthesian(angle, radius){ // angle in radians
+
+        let xVal = radius * Math.sin(angle);
+        let yVal = radius * Math.sin(angle);
+
+        return {"X" : xVal, "Y" : yVal};
+
     }
 
     static degrees(rad){ //converts radians to degrees

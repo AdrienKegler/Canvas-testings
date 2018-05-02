@@ -1,6 +1,6 @@
 class WorldSettings {
     constructor(){
-        this._gravityConstant = 1;
+        this._gravityConstant = 20;
         this._mouseLocation = new Vector({"X": window.innerWidth / 2, "Y": window.innerHeight / 2});
         this.frameRate = 60;
         this._containerCollection = new Collection();
