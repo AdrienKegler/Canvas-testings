@@ -1,44 +1,42 @@
-function coreFunction(canvas) {
+function coreFunction() {
 
-    sizingCanvas(canvas);
-
-    let container = new Canvas2DAsContainer(canvas);
-    instance._containerCollection.add(container, "Container");
-    container.setOverflowStrategy("loop").setRemanancy(1);
+    sizingcanvas(world.window);
 
 
+    var a = function (container, size, pointX = null, pointY = null) {
 
-
-    var a = function (size, pointX = null, pointY = null) {
-        let point = KeglerMaths.randPointInCircle(50);
+        let point = KeglerMaths.randPointInCircle(40);
 
         container.addParticle(
-            new TriangleParticle(
+            new RoundParticle(
                 new Vector({
-                    "X": Math.random() * window.innerWidth,
-                    "Y": Math.random() * window.innerHeight
+                    "X": point.X,
+                    "Y": point.Y
                 }),
                 new PhysX(
-                    {"X": 0, "Y": 0},
-                    {}).addForce(new Vector({"X": 0, "Y": 0.00 * size * instance._gravityConstant}), "gravity")
-                    .setBounceAbsorption(0.65).setBehavior("standard").setMass(size * size),
-                new VisualFx().setColor(Math.random() * 255, Math.random() * 255, Math.random() * 255, 1),
-                new Apex(5,0),
-                new Apex(0,15),
-                new Apex(10,15),
-
-            ).setDirectionPointer("Acceleration")
+                    {
+                        "X": KeglerMaths.gaussRand(),
+                        "Y": -20 + Math.random()*5
+                    },
+                    {}).addForce(new Vector({"X": 0, "Y": 0.01 * size * world._gravityConstant}), "gravity")
+                    .setBounceAbsorption(0.8).setBehavior("standard").setMass(size),
+                new VisualFx().setColor(255, 255, 255, 0.8),
+                size
+            )
         );
     };
 
 
     let timer = new InvervalTimer(f => {
-        if (container.particleCollection._content.length < 40) {
-            a(3);
-        }
-
-        instance.print();
-    }, instance._delay);
+        world.particleSystemCollection.forEach(particleSystem => {
+            if (particleSystem.particleCollection._content.length < 1000) {
+               for(let i = 0; i<1       ; i++){
+                   a(particleSystem, 5);
+               }
+            }
+        });
+        world.print();
+    }, world._delay);
 
 
     document.addEventListener('keydown', (event) => {
@@ -60,9 +58,9 @@ function coreFunction(canvas) {
                 break;
 
             case "w":
-                container.particleCollection.forEach(particle => {
-                    particle._physX.addForce(
-                        new Vector({"X": 0.1, "Y": 0}), "Wind"
+                world.particleSystemCollection.forEach(particleSystem => {
+                    particleSystem.addForce(
+                        new Vector({"X": 0.5, "Y": 0}), "Wind"
                     )
                 });
                 break;
@@ -73,15 +71,16 @@ function coreFunction(canvas) {
     });
 
     document.addEventListener('keyup', (event) => {
-        container.particleCollection.forEach(particle => {
-            particle._physX._forcesCollection.update("Wind", new Vector());
+        world.particleSystemCollection.forEach(particleSystem => {
+            particleSystem.particleCollection.forEach(particle => {
+                particle._physX._forcesCollection.update("Wind", new Vector());
+            });
         });
-
     });
 
 }
 
-function sizingCanvas(canvas) {
+function sizingcanvas(canvas) {
     let widthPx = (window.innerWidth - 8).toString() + 'px';
     let heightPx = (window.innerHeight - 8).toString() + 'px';
 
@@ -93,5 +92,13 @@ function sizingCanvas(canvas) {
 
 
 addEventListener("mousedown", function updateMouse(event) {
-    instance.mouseLocation = new Vector({"X": event.clientX, "Y": event.clientY});
+    world.mouseLocation = new Vector({"X": event.clientX, "Y": event.clientY});
+});
+
+addEventListener("mousedown", function addNewParticleSystem(event) {
+    if (event.ctrlKey) {
+        let container = new ParticleSystem({"X" : world.mouseLocation.getDimension("X"), "Y" : world.mouseLocation.getDimension("Y")});
+        world._particleSystemCollection.add(container);
+        container.setOverflowStrategy("delete");
+    }
 });

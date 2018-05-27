@@ -2,14 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6214d97f-f6dd-4102-bf37-58122f3483a6" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/PendulumParticle.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Renderer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ShapeRenderer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WorldSettings.js" beforeDir="false" afterPath="$PROJECT_DIR$/WorldSettings.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/canvas2DAsContainer.js" beforeDir="false" afterPath="$PROJECT_DIR$/canvas2DAsContainer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WorldSettings.js" beforeDir="false" afterPath="$PROJECT_DIR$/World.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/canvas frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/canvas frame.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/canvas2DAsContainer.js" beforeDir="false" afterPath="$PROJECT_DIR$/ParticleSystem.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/canvasPageController.js" beforeDir="false" afterPath="$PROJECT_DIR$/canvasPageController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/keglerMaths.js" beforeDir="false" afterPath="$PROJECT_DIR$/keglerMaths.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/particle.js" beforeDir="false" afterPath="$PROJECT_DIR$/particle.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/physX.js" beforeDir="false" afterPath="$PROJECT_DIR$/physX.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/polygonDefinedByApexesParticle.js" beforeDir="false" afterPath="$PROJECT_DIR$/polygonDefinedByApexesParticle.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/vector.js" beforeDir="false" afterPath="$PROJECT_DIR$/vector.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -27,53 +30,35 @@
       <file leaf-file-name="canvas frame.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/canvas frame.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="20" column="61" lean-forward="true" selection-start-line="20" selection-start-column="61" selection-end-line="20" selection-end-column="61" />
+            <state relative-caret-position="595">
+              <caret line="35" column="9" selection-start-line="35" selection-start-column="9" selection-end-line="35" selection-end-column="9" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="WorldSettings.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/WorldSettings.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="610">
-              <caret line="60" selection-start-line="60" selection-end-line="60" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="canvasPageController.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="canvasPageController.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/canvasPageController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="30" column="10" lean-forward="true" selection-start-line="30" selection-start-column="10" selection-end-line="30" selection-end-column="10" />
-              <folding>
-                <element signature="n#!!block;n#sizingCanvas#0" />
-              </folding>
+            <state relative-caret-position="83">
+              <caret line="62" column="44" selection-start-line="62" selection-start-column="44" selection-end-line="62" selection-end-column="44" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="keglerMaths.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/keglerMaths.js">
+      <file leaf-file-name="World.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/World.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="41" column="40" lean-forward="true" selection-start-line="41" selection-start-column="40" selection-end-line="41" selection-end-column="40" />
+            <state relative-caret-position="102">
+              <caret line="6" column="46" selection-start-line="6" selection-start-column="46" selection-end-line="6" selection-end-column="46" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="canvas2DAsContainer.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/canvas2DAsContainer.js">
+      <file leaf-file-name="ParticleSystem.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ParticleSystem.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="610">
-              <caret line="163" column="20" selection-start-line="163" selection-start-column="16" selection-end-line="163" selection-end-column="20" />
-              <folding>
-                <element signature="n#!!block;n#canvas#0;n#Canvas2DAsContainer#0" />
-                <element signature="n#!!block;n#canvas#1;n#Canvas2DAsContainer#0" />
-                <element signature="n#!!block;n#overflowStrategy#0;n#Canvas2DAsContainer#0" />
-                <element signature="n#!!block;n#overflowTreatment#0;n#Canvas2DAsContainer#0" />
-              </folding>
+            <state relative-caret-position="362">
+              <caret line="66" column="20" lean-forward="true" selection-start-line="66" selection-start-column="20" selection-end-line="66" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -81,8 +66,8 @@
       <file leaf-file-name="particle.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/particle.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="23" selection-start-line="23" selection-end-line="23" />
+            <state relative-caret-position="294">
+              <caret line="167" column="31" lean-forward="true" selection-start-line="167" selection-start-column="31" selection-end-line="167" selection-end-column="31" />
               <folding>
                 <element signature="n#!!block;n#isVisible#0;n#Particle#0" />
               </folding>
@@ -90,14 +75,31 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="Renderer.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Renderer.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="474">
+              <caret line="32" column="31" lean-forward="true" selection-start-line="32" selection-start-column="31" selection-end-line="32" selection-end-column="31" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PendulumParticle.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/PendulumParticle.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-308">
+              <caret line="2" column="46" selection-start-line="2" selection-start-column="16" selection-end-line="2" selection-end-column="46" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="physX.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/physX.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="263" column="202" selection-start-line="263" selection-start-column="202" selection-end-line="263" selection-end-column="202" />
+            <state relative-caret-position="-1054">
+              <caret line="27" column="31" selection-start-line="27" selection-start-column="31" selection-end-line="27" selection-end-column="31" />
               <folding>
                 <element signature="n#!!block;n#velocity#0;n#PhysX#0" />
-                <element signature="n#!!block;n#velocity#1;n#PhysX#0" />
                 <element signature="n#!!block;n#mass#0;n#PhysX#0" />
                 <element signature="n#!!block;n#mass#1;n#PhysX#0" />
                 <element signature="n#!!block;n#forcesCollection#0;n#PhysX#0" />
@@ -116,7 +118,6 @@
                 <element signature="n#!!block;n#frictionsCollection#1;n#PhysX#0" />
                 <element signature="n#!!block;n#interParticuleGravitation#0;n#PhysX#0" />
                 <element signature="n#!!block;n#interParticuleGravitation#1;n#PhysX#0" />
-                <element signature="n#!!block;n#setMass#0;n#PhysX#0" />
                 <element signature="n#!!block;n#addForce#0;n#PhysX#0" />
                 <element signature="n#!!block;n#removeForce#0;n#PhysX#0" />
                 <element signature="n#!!block;n#updateFrictionVector#0;n#PhysX#0" />
@@ -125,17 +126,7 @@
                 <element signature="n#!!block;n#setBounceAbsorption#0;n#PhysX#0" />
                 <element signature="n#!!block;n#setBehavior#0;n#PhysX#0" />
                 <element signature="n#!!block;n#getVelocityForRandomWalker#0;n#PhysX#0" />
-                <element signature="n#!!block;n#bounce#0;n#PhysX#0" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="roundParticle.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/roundParticle.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="20" column="55" selection-start-line="20" selection-start-column="51" selection-end-line="20" selection-end-column="55" />
             </state>
           </provider>
         </entry>
@@ -153,42 +144,47 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>setFadingProbabilities</find>
-      <find>.components</find>
-      <find>console</find>
-      <find>getDimension</find>
-      <find>scale(0.0001)</find>
-      <find>toVector(position</find>
-      <find>newVector</find>
-      <find>new Vec</find>
-      <find>[]</find>
-      <find>vectorsSum</find>
-      <find>vectorsSum(</find>
-      <find>RoundParticle</find>
-      <find>Into</find>
-      <find>position</find>
-      <find>scale(</find>
-      <find>isVisible</find>
-      <find>console.log(this.position);</find>
-      <find>get</find>
-      <find>console.log(newMagnitude);</find>
-      <find>console.log(particleAttractionForce);</find>
-      <find>scale</find>
-      <find>get mas</find>
-      <find>console.log</find>
-      <find>particleAttractionForce</find>
-      <find>gravityAttractionToParticlesbeha</find>
-      <find>be</find>
       <find>gravityAttractionToParticles</find>
       <find>console.log(potentialNewMagnitude);</find>
       <find>_directionPointer</find>
       <find>angle</find>
+      <find>draw(</find>
+      <find>Math.PI /</find>
+      <find>90</find>
+      <find>rotate</find>
+      <find>instance</find>
+      <find>get2DMagnitude</find>
+      <find>real</find>
+      <find>this.mass</find>
+      <find>conso</find>
+      <find>parti</find>
+      <find>particleSystemCollection</find>
+      <find>canvas</find>
+      <find>console.</find>
+      <find>_canvas</find>
+      <find>new Par</find>
+      <find>elm.drawdraw</find>
+      <find>constructor</find>
+      <find>new parti</find>
+      <find>elm.position.getDimension(&quot;X&quot;)</find>
+      <find>elm.position.getDimension(&quot;Y&quot;)</find>
+      <find>bounce</find>
+      <find>setPos</find>
+      <find>con</find>
+      <find>console</find>
+      <find>addForce</find>
+      <find>forEach</find>
     </findStrings>
     <replaceStrings>
       <replace>this</replace>
       <replace>position.getDimension(&quot;X&quot;)</replace>
       <replace>position.getDimension(&quot;Y&quot;)</replace>
       <replace>dimension</replace>
+      <replace>world</replace>
+      <replace>getMagnitude</replace>
+      <replace>world.window</replace>
+      <replace>posX</replace>
+      <replace>posY</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -205,19 +201,28 @@
         <option value="$PROJECT_DIR$/intervalTimer.js" />
         <option value="$PROJECT_DIR$/Dot.js" />
         <option value="$PROJECT_DIR$/probabilistChanges.js" />
-        <option value="$PROJECT_DIR$/canvas frame.html" />
         <option value="$PROJECT_DIR$/visualFX.js" />
         <option value="$PROJECT_DIR$/triangleParticle.js" />
-        <option value="$PROJECT_DIR$/roundParticle.js" />
         <option value="$PROJECT_DIR$/canvasAsContainer.js" />
-        <option value="$PROJECT_DIR$/WorldSettings.js" />
         <option value="$PROJECT_DIR$/polygonDefinedByApexesParticle.js" />
-        <option value="$PROJECT_DIR$/vector.js" />
+        <option value="$PROJECT_DIR$/PendulleParticle.js" />
+        <option value="$PROJECT_DIR$/PenduleParticle.js" />
+        <option value="$PROJECT_DIR$/roundParticle.js" />
+        <option value="$PROJECT_DIR$/PendulumPhysX.js" />
+        <option value="$PROJECT_DIR$/PendulumParticle.js" />
         <option value="$PROJECT_DIR$/canvas2DAsContainer.js" />
-        <option value="$PROJECT_DIR$/particle.js" />
+        <option value="$PROJECT_DIR$/WorldMap.js" />
+        <option value="$PROJECT_DIR$/WorldSettings.js" />
+        <option value="$PROJECT_DIR$/vector.js" />
+        <option value="$PROJECT_DIR$/canvas frame.html" />
         <option value="$PROJECT_DIR$/keglerMaths.js" />
         <option value="$PROJECT_DIR$/physX.js" />
+        <option value="$PROJECT_DIR$/World.js" />
+        <option value="$PROJECT_DIR$/ParticleSystem.js" />
         <option value="$PROJECT_DIR$/canvasPageController.js" />
+        <option value="$PROJECT_DIR$/ShapeRenderer.js" />
+        <option value="$PROJECT_DIR$/particle.js" />
+        <option value="$PROJECT_DIR$/Renderer.js" />
       </list>
     </option>
   </component>
@@ -260,7 +265,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
-    <property name="SearchEverywhereHistoryKey" value="keglerMa&#9;FILE&#9;file://D:/wampUE/www/Canvas testings/keglerMaths.js&#10;kegler&#9;FILE&#9;file://D:/wampUE/www/Canvas testings/keglerMaths.js&#10;phy&#9;FILE&#9;file://D:/wampUE/www/Canvas testings/physX.js&#10;physix&#9;null&#9;null&#10;round&#9;null&#9;null&#10;particle&#9;FILE&#9;file://D:/wampUE/www/Canvas testings/triangleParticle.js&#10;vecto&#9;FILE&#9;file://D:/wampUE/www/Canvas testings/vector.js&#10;trian&#9;FILE&#9;file://D:/wampUE/www/Canvas testings/triangleParticle.js&#10;phys&#9;FILE&#9;file://D:/wampUE/www/Canvas testings/physX.js" />
+    <property name="SearchEverywhereHistoryKey" value="Visua&#9;FILE&#9;file://D:/wampUE/www/Canvas testings/visualFX.js&#10;phys&#9;FILE&#9;file://D:/wampUE/www/Canvas testings/physX.js&#10;fx&#9;FILE&#9;file://D:/wampUE/www/Canvas testings/visualFX.js&#10;vecto&#9;FILE&#9;file://D:/wampUE/www/Canvas testings/vector.js&#10;vector&#9;null&#9;null&#10;keglerMa&#9;FILE&#9;file://D:/wampUE/www/Canvas testings/keglerMaths.js&#10;kegler&#9;FILE&#9;file://D:/wampUE/www/Canvas testings/keglerMaths.js&#10;phy&#9;FILE&#9;file://D:/wampUE/www/Canvas testings/physX.js&#10;physix&#9;null&#9;null&#10;round&#9;null&#9;null&#10;particle&#9;FILE&#9;file://D:/wampUE/www/Canvas testings/triangleParticle.js&#10;trian&#9;FILE&#9;file://D:/wampUE/www/Canvas testings/triangleParticle.js" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$USER_HOME$/AppData/Local/GitHubDesktop/app-1.1.1/resources/app/git/cmd/git.exe" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
@@ -303,14 +308,25 @@
       <workItem from="1525174087991" duration="14819000" />
       <workItem from="1525191617668" duration="2611000" />
       <workItem from="1525206027709" duration="3885000" />
+      <workItem from="1525291010187" duration="895000" />
+      <workItem from="1525331480209" duration="2391000" />
+      <workItem from="1525719324699" duration="6424000" />
+      <workItem from="1525955327177" duration="17589000" />
+      <workItem from="1526033507515" duration="7404000" />
+      <workItem from="1526131363527" duration="599000" />
+      <workItem from="1527162356380" duration="7068000" />
+      <workItem from="1527264151194" duration="701000" />
+      <workItem from="1527431878066" duration="1504000" />
+      <workItem from="1527433441715" duration="3691000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="114386000" />
+    <option name="totallyTimeSpent" value="162652000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.203125" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -339,45 +355,10 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="4" />
+      <option name="time" value="6" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/apex.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="4" selection-start-line="1" selection-start-column="4" selection-end-line="1" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/triangleParticle.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="61" selection-start-column="31" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shapesSamples.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="22" selection-start-column="6" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="333">
-          <caret line="2672" column="4" selection-start-line="2672" selection-start-column="4" selection-end-line="2672" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/keglerMaths.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="32" column="18" selection-start-line="32" selection-start-column="18" selection-end-line="32" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/roundParticle.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
@@ -420,13 +401,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/collection.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="36" column="9" lean-forward="true" selection-start-line="36" selection-start-column="9" selection-end-line="36" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/particle.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="214">
@@ -443,7 +417,6 @@
           <caret line="216" column="82" lean-forward="true" selection-start-line="216" selection-start-column="82" selection-end-line="216" selection-end-column="83" />
           <folding>
             <element signature="n#!!block;n#velocity#0;n#PhysX#0" />
-            <element signature="n#!!block;n#velocity#1;n#PhysX#0" />
             <element signature="n#!!block;n#mass#0;n#PhysX#0" />
             <element signature="n#!!block;n#mass#1;n#PhysX#0" />
             <element signature="n#!!block;n#forcesCollection#0;n#PhysX#0" />
@@ -462,7 +435,6 @@
             <element signature="n#!!block;n#frictionsCollection#1;n#PhysX#0" />
             <element signature="n#!!block;n#interParticuleGravitation#0;n#PhysX#0" />
             <element signature="n#!!block;n#interParticuleGravitation#1;n#PhysX#0" />
-            <element signature="n#!!block;n#setMass#0;n#PhysX#0" />
             <element signature="n#!!block;n#addForce#0;n#PhysX#0" />
             <element signature="n#!!block;n#removeForce#0;n#PhysX#0" />
             <element signature="n#!!block;n#updateFrictionVector#0;n#PhysX#0" />
@@ -471,7 +443,6 @@
             <element signature="n#!!block;n#setBounceAbsorption#0;n#PhysX#0" />
             <element signature="n#!!block;n#setBehavior#0;n#PhysX#0" />
             <element signature="n#!!block;n#getVelocityForRandomWalker#0;n#PhysX#0" />
-            <element signature="n#!!block;n#bounce#0;n#PhysX#0" />
           </folding>
         </state>
       </provider>
@@ -525,7 +496,6 @@
           <caret line="112" column="14" lean-forward="true" selection-start-line="112" selection-start-column="14" selection-end-line="112" selection-end-column="14" />
           <folding>
             <element signature="n#!!block;n#velocity#0;n#PhysX#0" />
-            <element signature="n#!!block;n#velocity#1;n#PhysX#0" />
             <element signature="n#!!block;n#mass#0;n#PhysX#0" />
             <element signature="n#!!block;n#mass#1;n#PhysX#0" />
             <element signature="n#!!block;n#forcesCollection#0;n#PhysX#0" />
@@ -544,7 +514,6 @@
             <element signature="n#!!block;n#frictionsCollection#1;n#PhysX#0" />
             <element signature="n#!!block;n#interParticuleGravitation#0;n#PhysX#0" />
             <element signature="n#!!block;n#interParticuleGravitation#1;n#PhysX#0" />
-            <element signature="n#!!block;n#setMass#0;n#PhysX#0" />
             <element signature="n#!!block;n#addForce#0;n#PhysX#0" />
             <element signature="n#!!block;n#removeForce#0;n#PhysX#0" />
             <element signature="n#!!block;n#updateFrictionVector#0;n#PhysX#0" />
@@ -553,7 +522,6 @@
             <element signature="n#!!block;n#setBounceAbsorption#0;n#PhysX#0" />
             <element signature="n#!!block;n#setBehavior#0;n#PhysX#0" />
             <element signature="n#!!block;n#getVelocityForRandomWalker#0;n#PhysX#0" />
-            <element signature="n#!!block;n#bounce#0;n#PhysX#0" />
           </folding>
         </state>
       </provider>
@@ -615,20 +583,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apex.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="5" lean-forward="true" selection-start-line="4" selection-start-column="5" selection-end-line="4" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Dot.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="20" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="333">
@@ -657,13 +611,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/visualFX.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-101">
-          <caret line="2" column="4" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/canvasAsContainer.js" />
     <entry file="file://$PROJECT_DIR$/shapesSamples.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -674,83 +621,82 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/polygonDefinedByApexesParticle.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="661">
-          <caret line="47" column="5" selection-start-line="47" selection-start-column="5" selection-end-line="47" selection-end-column="5" />
+        <state relative-caret-position="304">
+          <caret line="50" selection-start-line="50" selection-end-line="63" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PendulumPhysX.js" />
+    <entry file="file://$PROJECT_DIR$/roundParticle.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" selection-start-line="19" selection-end-line="20" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WorldMap.js" />
+    <entry file="file://$PROJECT_DIR$/Dot.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="20" selection-start-line="4" selection-start-column="20" selection-end-line="4" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apex.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="1" lean-forward="true" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/collection.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-206">
+          <caret line="30" column="4" selection-start-line="30" selection-start-column="4" selection-end-line="30" selection-end-column="4" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/vector.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="19" selection-start-line="7" selection-start-column="14" selection-end-line="7" selection-end-column="19" />
+        <state relative-caret-position="204">
+          <caret line="48" column="19" selection-start-line="48" selection-start-column="11" selection-end-line="48" selection-end-column="19" />
         </state>
       </provider>
     </entry>
     <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.es5.d.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="222">
-          <caret line="611" column="4" selection-start-line="611" selection-start-column="4" selection-end-line="611" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/roundParticle.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="55" selection-start-line="20" selection-start-column="51" selection-end-line="20" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/particle.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" selection-start-line="23" selection-end-line="23" />
-          <folding>
-            <element signature="n#!!block;n#isVisible#0;n#Particle#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/canvas frame.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="61" lean-forward="true" selection-start-line="20" selection-start-column="61" selection-end-line="20" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WorldSettings.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="610">
-          <caret line="60" selection-start-line="60" selection-end-line="60" />
+          <caret line="472" column="4" selection-start-line="472" selection-start-column="4" selection-end-line="472" selection-end-column="4" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/keglerMaths.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="41" column="40" lean-forward="true" selection-start-line="41" selection-start-column="40" selection-end-line="41" selection-end-column="40" />
+        <state relative-caret-position="276">
+          <caret line="27" column="28" selection-start-line="27" selection-start-column="11" selection-end-line="27" selection-end-column="28" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/canvas2DAsContainer.js">
+    <entry file="file://$PROJECT_DIR$/World.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="610">
-          <caret line="163" column="20" selection-start-line="163" selection-start-column="16" selection-end-line="163" selection-end-column="20" />
-          <folding>
-            <element signature="n#!!block;n#canvas#0;n#Canvas2DAsContainer#0" />
-            <element signature="n#!!block;n#canvas#1;n#Canvas2DAsContainer#0" />
-            <element signature="n#!!block;n#overflowStrategy#0;n#Canvas2DAsContainer#0" />
-            <element signature="n#!!block;n#overflowTreatment#0;n#Canvas2DAsContainer#0" />
-          </folding>
+        <state relative-caret-position="102">
+          <caret line="6" column="46" selection-start-line="6" selection-start-column="46" selection-end-line="6" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/canvas frame.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="595">
+          <caret line="35" column="9" selection-start-line="35" selection-start-column="9" selection-end-line="35" selection-end-column="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/physX.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="263" column="202" selection-start-line="263" selection-start-column="202" selection-end-line="263" selection-end-column="202" />
+        <state relative-caret-position="-1054">
+          <caret line="27" column="31" selection-start-line="27" selection-start-column="31" selection-end-line="27" selection-end-column="31" />
           <folding>
             <element signature="n#!!block;n#velocity#0;n#PhysX#0" />
-            <element signature="n#!!block;n#velocity#1;n#PhysX#0" />
             <element signature="n#!!block;n#mass#0;n#PhysX#0" />
             <element signature="n#!!block;n#mass#1;n#PhysX#0" />
             <element signature="n#!!block;n#forcesCollection#0;n#PhysX#0" />
@@ -769,7 +715,6 @@
             <element signature="n#!!block;n#frictionsCollection#1;n#PhysX#0" />
             <element signature="n#!!block;n#interParticuleGravitation#0;n#PhysX#0" />
             <element signature="n#!!block;n#interParticuleGravitation#1;n#PhysX#0" />
-            <element signature="n#!!block;n#setMass#0;n#PhysX#0" />
             <element signature="n#!!block;n#addForce#0;n#PhysX#0" />
             <element signature="n#!!block;n#removeForce#0;n#PhysX#0" />
             <element signature="n#!!block;n#updateFrictionVector#0;n#PhysX#0" />
@@ -778,18 +723,59 @@
             <element signature="n#!!block;n#setBounceAbsorption#0;n#PhysX#0" />
             <element signature="n#!!block;n#setBehavior#0;n#PhysX#0" />
             <element signature="n#!!block;n#getVelocityForRandomWalker#0;n#PhysX#0" />
-            <element signature="n#!!block;n#bounce#0;n#PhysX#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/visualFX.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" column="28" lean-forward="true" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/canvasPageController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="30" column="10" lean-forward="true" selection-start-line="30" selection-start-column="10" selection-end-line="30" selection-end-column="10" />
+        <state relative-caret-position="83">
+          <caret line="62" column="44" selection-start-line="62" selection-start-column="44" selection-end-line="62" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ParticleSystem.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="362">
+          <caret line="66" column="20" lean-forward="true" selection-start-line="66" selection-start-column="20" selection-end-line="66" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ShapeRenderer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="16" selection-start-line="2" selection-start-column="16" selection-end-line="2" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PendulumParticle.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-308">
+          <caret line="2" column="46" selection-start-line="2" selection-start-column="16" selection-end-line="2" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/particle.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="167" column="31" lean-forward="true" selection-start-line="167" selection-start-column="31" selection-end-line="167" selection-end-column="31" />
           <folding>
-            <element signature="n#!!block;n#sizingCanvas#0" />
+            <element signature="n#!!block;n#isVisible#0;n#Particle#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Renderer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="474">
+          <caret line="32" column="31" lean-forward="true" selection-start-line="32" selection-start-column="31" selection-end-line="32" selection-end-column="31" />
         </state>
       </provider>
     </entry>

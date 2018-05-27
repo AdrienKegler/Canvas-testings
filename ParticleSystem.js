@@ -1,13 +1,13 @@
-class Canvas2DAsContainer {
+class ParticleSystem {
 
-    constructor(canvas, keepTrace = false) {
-        this.worldCoordonates = new Vector({"X" : 0, "Y" : 0});
+    constructor(worldCoordinates = new Vector({"X" : 0, "Y" : 0})) {
+        this.worldCoordinates = Vector.toVector(worldCoordinates);
         this._overflowStrategy = "bounce";
         this._unvisibleStrategy = "delete";
-        this._canvas = canvas.getContext('2d');
+        this._canvas = world.window.getContext('2d');
         this._particleCollection = new Collection();
-        this.visualFx = new VisualFx().setColor(0, 0, 0, 1);
         return this;
+        this._worldCoordinates = worldCoordinates;
     }
 
     get canvas() {
@@ -17,6 +17,15 @@ class Canvas2DAsContainer {
     set canvas(value) {
         this._canvas = value;
         return this;
+    }
+
+
+    get worldCoordinates() {
+        return this._worldCoordinates;
+    }
+
+    set worldCoordinates(value) {
+        this._worldCoordinates = Vector.toVector(value);
     }
 
     get overflowStrategy() {
@@ -55,6 +64,14 @@ class Canvas2DAsContainer {
         return this;
     }
 
+    addForce(force){
+        this.particleCollection.forEach(particle => {
+            particle._physX.addForce(force);
+        })
+    }
+
+
+
 // check if Dot is inside a polygon (defined by apex and from any type)
     is_inside(dot, vs) {
 
@@ -73,59 +90,47 @@ class Canvas2DAsContainer {
         return inside;
     };
 
-    setRemanancy(value) {
-        this.visualFx.colorA = value;
-        return this;
-    }
-
-    keepTrace() {
-        this.setRemanancy(0);
-        return this;
-    }
 
     overflowTreatment(elm) {
         if (this.overflowStrategy !== 'nothing') {
+            let posX = elm.position.getDimension("X") + this.worldCoordinates.getDimension("X");
+            let posY = elm.position.getDimension("Y") + this.worldCoordinates.getDimension("Y");
+
             switch (this.overflowStrategy) {
                 case 'delete':
-                    if (elm.position.getDimension("X") > this.canvas.canvas.width || elm.position.getDimension("Y") > this.canvas.canvas.height
+                    if (posX > this.canvas.canvas.width || posY > this.canvas.canvas.height
                         ||
-                        elm.position.getDimension("X") < 0 || elm.position.getDimension("Y") < 0) {
+                        posX < 0 || posY < 0) {
                         this.removeParticle(elm);
                     }
                     break;
 
-                case 'loop': // TODO : Check if it would work with speeds greater than width/height
-                    if (elm.position.getDimension("X") > this.canvas.canvas.width || elm.position.getDimension("Y") > this.canvas.canvas.height) {
-                        elm.position.setBaseDimension("X", elm.position.getDimension("X") % this.canvas.canvas.width);
-                        elm.position.setBaseDimension("Y", elm.position.getDimension("Y") % this.canvas.canvas.height);
+                case 'loop': // TODO : Check if it would work properly with speeds greater than width/height
+                    if (posX > this.canvas.canvas.width || posY > this.canvas.canvas.height) {
+                        elm.position.setBaseDimension("X", posX % this.canvas.canvas.width);
+                        elm.position.setBaseDimension("Y", posY % this.canvas.canvas.height);
                     }
-                    if (elm.position.getDimension("X") < 0) {
-                        elm.position.setBaseDimension("X", this.canvas.canvas.width + elm.position.getDimension("X"));
+                    if (posX < 0) {
+                        elm.position.setBaseDimension("X", this.canvas.canvas.width + posX);
                     }
-                    if (elm.position.getDimension("Y") < 0) {
-                        elm.position.setBaseDimension("Y", this.canvas.canvas.height + elm.position.getDimension("Y"));
+                    if (posY < 0) {
+                        elm.position.setBaseDimension("Y", this.canvas.canvas.height + posY);
                     }
                     break;
-
-                case 'share':
-                    // TODO : make share particles with other containers
-                    break;
-
-
 
                 case 'bounce':
 
-                    if (elm.position.getDimension("X") < 0 && elm.physX.velocity.getDimension("X") < 0) {
+                    if (posX < 0 && elm.physX.velocity.getDimension("X") < 0) {
                         elm.physX.bounce("X");
-                    } else if (elm.position.getDimension("X") > this.canvas.canvas.width && elm.physX.velocity.getDimension("X") > 0) {
+                    } else if (posX > this.canvas.canvas.width && elm.physX.velocity.getDimension("X") > 0) {
                         elm.physX.bounce("X");
                     }
 
 
-                    if (elm.position.getDimension("Y") < 0 && elm.physX.velocity.getDimension("Y") < 0) {
+                    if (posY < 0 && elm.physX.velocity.getDimension("Y") < 0) {
                         elm.physX.bounce("Y");
                     }
-                    else if (elm.position.getDimension("Y") > this.canvas.canvas.height && elm.physX.velocity.getDimension("Y") > 0) {
+                    else if (posY > this.canvas.canvas.height && elm.physX.velocity.getDimension("Y") > 0) {
                         elm.physX.bounce("Y");
                     }
                     break;
@@ -139,14 +144,11 @@ class Canvas2DAsContainer {
     }
 
     print() {
-        this.canvas.fillStyle = this.visualFx.getColor();
-        this.canvas.fillRect(0, 0, canvas.width, canvas.height);
-
 
         for (let elmIdx in this._particleCollection._content){
             let elm = this._particleCollection._content[elmIdx];
 
-            if (instance._interParticleInteraction){
+            if (world._interParticleInteraction){
                 let particleCollectionCopy = this.particleCollection;
                 elm.updateGravityAttractionBetweenParticles(particleCollectionCopy);
             }
@@ -161,7 +163,7 @@ class Canvas2DAsContainer {
                         break;
                 }
             }
-            elm.draw(this.canvas);
+            elm.draw(this.canvas, this.worldCoordinates);
             this.overflowTreatment(elm);
         }
         return this;

@@ -19,13 +19,15 @@
     <script src="particle.js"></script>
     <script src="roundParticle.js"></script>
     <script src="polygonDefinedByApexesParticle.js"></script>
+    <script src="PendulumParticle.js"></script>
     <script src="triangleParticle.js"></script>
     <script src="shapesSamples.js"></script>
 
     <script src="visualFX.js"></script>
 
-    <script src="canvas2DAsContainer.js"></script>
-    <script src="WorldSettings.js"></script>
+    <script src="ParticleSystem.js"></script>
+    <script src="World.js"></script>
+    
     <script src="canvasPageController.js"></script>
 </head>
 <body>
@@ -36,8 +38,9 @@
 
 <script type="text/javascript">
     let canvas = document.getElementById('mainCanvas');
-    var instance = new WorldSettings();
-    coreFunction(canvas);
+    var world = new World();
+    world.window = canvas;
+    coreFunction();
 
 </script>
 

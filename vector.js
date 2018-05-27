@@ -74,21 +74,25 @@ class Vector {
         return this.getBaseDimension(value) * this._scale;
     }
 
-    get2DMagnitude() {
-        let a = this.getDimension("X");
-        let b = this.getDimension("Y");
 
-        return (Math.sqrt((a * a) + (b * b)));
+    getMagnitude(){
+        let preResult = 0;
+        for(let dimension in this.components){
+            preResult = preResult + Math.pow(this.getDimension(dimension), 2);
+        }
+        return Math.sqrt(preResult);
     }
 
 
     getNormalized() {
-        let mag = this.get2DMagnitude();
-        let dimensionX = mag === 0 ? 0 : this.getDimension("X") / mag;
-        let dimensionY = mag === 0 ? 0 : this.getDimension("Y") / mag;
+        let mag = this.getMagnitude();
+        let normalizedVector = {};
 
+        for (dimension in this.components) {
+            normalizedVector[dimension] = mag === 0 ? 0 : this.getDimension(dimension) / mag;
+        }
 
-        return new Vector({"X" : dimensionX, "Y" : dimensionY });
+        return new Vector(normalizedVector);
     }
 
     getSquared(){
@@ -114,7 +118,7 @@ class Vector {
 
     // BE CAREFUL ! WOULD ERASE YOUR ORIGINAL STATE WITHOUT CHANCE OF RECOVER (from the class itself at least)
     normalize() {
-        let mag = this.get2DMagnitude();
+        let mag = this.getMagnitude();
         this.componentX = this.componentX / mag;
         this.componentY = this.componentY / mag;
         return this;

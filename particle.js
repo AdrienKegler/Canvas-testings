@@ -56,6 +56,36 @@ class Particle {
     }
 
 
+    get angularVelocity() {
+        return this._angularVelocity;
+    }
+
+    set angularVelocity(value) {
+        this._angularVelocity = value;
+    }
+
+    setAngularVelocity(value) {
+        this._angularVelocity = value;
+        return this;
+    }
+
+    get angularAcceleration() {
+        return this._angularAcceleration;
+    }
+
+    set angularAcceleration(value) {
+        this._angularAcceleration = value;
+    }
+
+    setAngularAcceleration(value) {
+        this._angularAcceleration = value;
+        return this;
+    }
+
+    updateAngularAcceleration(){
+
+    }
+
 
     get directionPointer() {
         return this._directionPointer;
@@ -99,6 +129,9 @@ class Particle {
                 break;
 
             default:
+                this.updateAngularAcceleration();
+                this.angularVelocity = this.angularVelocity + this.angularAcceleration;
+                this.angle = this.angle + this.angularVelocity;
                 break;
         }
     }
@@ -126,7 +159,7 @@ class Particle {
 
     }
 
-    draw(ctx) {
+    draw(ctx, positionOffset) {
 
         this.applyPhysics();
         this.updateRotAngle();
@@ -135,7 +168,8 @@ class Particle {
 
         ctx.save();
 
-        ctx.translate(this._position.getDimension("X"), this._position.getDimension("Y"));
+        ctx.translate(  positionOffset.getDimension("X") + this._position.getDimension("X"),
+                        positionOffset.getDimension("Y") + this._position.getDimension("Y"));
 
         ctx.rotate(this._angle * Math.PI / 180);
 

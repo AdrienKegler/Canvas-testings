@@ -8,11 +8,10 @@ class PhysX {
         this._mass = 1;
 
         this._behavior = 'standard';
-        this._gravityFormulaName = "gaussian";
+        this._gravityFormulaName = "real";
         this._attractedbyOtherParticles = true;
         this._bounceAbsorption = bounceAbsorption;
         this._normalBounceAbsorption = bounceAbsorption / 500;
-        this._interParticuleGravitation = true;
 
         this._gotVisionAngle = true;
 
@@ -26,6 +25,11 @@ class PhysX {
     }
 
     set velocity(value) {
+        this._velocity = value;
+        return this;
+    }
+
+    setVelocity(value){
         this._velocity = value;
         return this;
     }
@@ -232,7 +236,7 @@ class PhysX {
     }
 
     bounce(dimension) {
-        this._velocity.setBaseDimension(dimension, this._velocity.components[dimension] * this.bounceAbsorption * -1);
+        this._velocity.setBaseDimension(dimension, (this._velocity.components[dimension] * this.bounceAbsorption * -1).toFixedDown(20));
         for (let otherDimensions in this._velocity.components) {
             if (otherDimensions !== dimension) {
                 this._velocity.setBaseDimension(otherDimensions, this._velocity.components[otherDimensions] * (1 - this.normalBounceAbsorption));
@@ -247,9 +251,9 @@ class PhysX {
 
             for (let particleIdx in particles._content) {
                 let positionDiff = vectorsSubstract(particles._content[particleIdx].position, fatherParticle.position);
-                let positionDiffMag = positionDiff.get2DMagnitude();
+                let positionDiffMag = positionDiff.getMagnitude();
                 let positionDiffNormalized = positionDiff.getNormalized();
-                let potentialNewMagnitude = instance.gravityConstant * fatherParticle.physX._mass * particles._content[particleIdx].physX._mass;
+                let potentialNewMagnitude = world.gravityConstant * fatherParticle.physX._mass * particles._content[particleIdx].physX._mass;
                 switch (this._gravityFormulaName) {
                     case 'Real':
                     case 'real':
@@ -296,7 +300,7 @@ class PhysX {
                 break;
 
             case 'mouseFollower':
-                let mouseAttraction = vectorsSubstract(instance.mouseLocation, args[0]).getRootSquared().setScale(0.01);
+                let mouseAttraction = vectorsSubstract(world.mouseLocation, args[0]).getRootSquared().setScale(0.01);
                 this.forcesCollection.update("mouseAttraction", mouseAttraction);
                 this.updateAcceleration();
                 break;
